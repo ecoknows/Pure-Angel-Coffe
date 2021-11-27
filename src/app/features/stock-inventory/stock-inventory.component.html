@@ -2,57 +2,120 @@
   <h1 class="primary">Stock Inventory</h1>
 
   <div class="lists">
-    <div class="item">
-      <div>
-        <h4 class="primary">Pure Angel Coffee</h4>
-        <h4 class="primary">Pure Angel Soap</h4>
-      </div>
+    <div class="row">
+      <h4 class="primary">B1T1 Coffee</h4>
+      <h4 class="primary">
+        {{
+          (user$ | async)?.stock_coffee_b1t1 == undefined
+            ? 0
+            : (user$ | async)?.stock_coffee_b1t1
+        }}
+        box
+      </h4>
     </div>
 
-    <div class="amount">
-      <div>
-        <h4 class="primary">
-          {{
-            (user$ | async)?.stock_coffee == undefined
-              ? 0
-              : (user$ | async)?.stock_coffee
-          }}
-          box
-        </h4>
-        <h4 class="primary">
-          {{
-            (user$ | async)?.stock_soap == undefined
-              ? 0
-              : (user$ | async)?.stock_soap
-          }}
-          box
-        </h4>
-      </div>
+    <div class="row">
+      <h4 class="primary">B2T3 Coffee</h4>
+      <h4 class="primary">
+        {{
+          (user$ | async)?.stock_coffee_b2t3 == undefined
+            ? 0
+            : (user$ | async)?.stock_coffee_b2t3
+        }}
+        box
+      </h4>
     </div>
-  </div>
 
-  <form
-    *ngIf="(user$ | async)?.is_admin"
-    [formGroup]="form"
-    (ngSubmit)="restock()"
-  >
-    <h1>Re-Stock Inventory</h1>
+    <div class="row">
+      <h4 class="primary">B1T1 Soap</h4>
+      <h4 class="primary">
+        {{
+          (user$ | async)?.stock_soap_b1t1 == undefined
+            ? 0
+            : (user$ | async)?.stock_soap_b1t1
+        }}
+        box
+      </h4>
+    </div>
 
-    <div class="lists">
-      <div class="amount">
-        <div>
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Pure Angel Coffee</mat-label>
-            <input matInput type="number" formControlName="stock_coffee" />
-          </mat-form-field>
-          <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Pure Angel Soap</mat-label>
-            <input matInput type="number" formControlName="stock_soap" />
-          </mat-form-field>
+    <div class="row">
+      <h4 class="primary">B2T3 Soap</h4>
+      <h4 class="primary">
+        {{
+          (user$ | async)?.stock_soap_b2t3 == undefined
+            ? 0
+            : (user$ | async)?.stock_soap_b2t3
+        }}
+        box
+      </h4>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="row">
+      <h4 class="primary">Total Coffee</h4>
+      <h4 class="primary">
+        {{
+          (user$ | async)?.stock_coffee == undefined
+            ? 0
+            : (user$ | async)?.stock_coffee
+        }}
+        box
+      </h4>
+    </div>
+
+    <div class="row">
+      <h4 class="primary">Total Soap</h4>
+      <h4 class="primary">
+        {{
+          (user$ | async)?.stock_soap == undefined
+            ? 0
+            : (user$ | async)?.stock_soap
+        }}
+        box
+      </h4>
+    </div>
+
+    <form
+      *ngIf="(user$ | async)?.is_admin"
+      [formGroup]="form"
+      (ngSubmit)="restock()"
+    >
+      <h1>Re-Stock Inventory</h1>
+
+      <div class="lists">
+        <div class="amount">
+          <div>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Pure Angel Coffee B1T1</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="stock_coffee_b1t1"
+              />
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Pure Angel Soap B1T1</mat-label>
+              <input matInput type="number" formControlName="stock_soap_b1t1" />
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Pure Angel Coffee B2T3</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="stock_coffee_b2t3"
+              />
+            </mat-form-field>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Pure Angel Soap B2T3</mat-label>
+              <input matInput type="number" formControlName="stock_soap_b2t3" />
+            </mat-form-field>
+          </div>
         </div>
       </div>
-    </div>
 
-    <button mat-raised-button color="primary" type="submit">Confirm</button>
-  </form>
+      <button mat-raised-button color="primary" type="submit">Confirm</button>
+    </form>
+  </div>
 </div>

@@ -49,3 +49,11 @@ export const B2T3_STOCKIST_ENCODE_NEW_ORDER = 25;
 
 export const COFFEE = "coffee";
 export const SOAP = "soap";
+
+export const TEXT_MESSAGE_NAME = "EDTESSCAFE";
+export const TEXT_MESSAGE_USERNAME = "eco.villaraza19@gmail.com";
+export const TEXT_MESSAGE_API_KEY = "06E673A1-0B53-0D3B-5038-B4A4B8E2EE69";
+
+export const WELCOME_TEXT_MESSAGE =
+  "\n Kamusta kayo? Ang ating website ay dumadaan sa proseso ng pag papaganda!" +
+  " kayat manatiling updated para sa mga kaabang abang na mga anunsyo!";

@@ -13,13 +13,36 @@ StockInventoryRouter.post(
     let user = await UserVerification.findOne({ user_id: req.user._id });
 
     if (user) {
-      if (req.body.stock_coffee != undefined && req.body.stock_coffee >= 0) {
-        user.stock_coffee = req.body.stock_coffee;
+      if (
+        req.body.stock_coffee_b1t1 != undefined &&
+        req.body.stock_coffee_b1t1 >= 0
+      ) {
+        user.stock_coffee_b1t1 = req.body.stock_coffee_b1t1;
       }
 
-      if (req.body.stock_soap != undefined && req.body.stock_soap >= 0) {
-        user.stock_soap = req.body.stock_soap;
+      if (
+        req.body.stock_coffee_b2t3 != undefined &&
+        req.body.stock_coffee_b2t3 >= 0
+      ) {
+        user.stock_coffee_b2t3 = req.body.stock_coffee_b2t3;
       }
+
+      if (
+        req.body.stock_soap_b1t1 != undefined &&
+        req.body.stock_soap_b1t1 >= 0
+      ) {
+        user.stock_soap_b1t1 = req.body.stock_soap_b1t1;
+      }
+
+      if (
+        req.body.stock_soap_b2t3 != undefined &&
+        req.body.stock_soap_b2t3 >= 0
+      ) {
+        user.stock_soap_b2t3 = req.body.stock_soap_b2t3;
+      }
+
+      user.stock_coffee = user.stock_coffee_b1t1 + user.stock_coffee_b2t3;
+      user.stock_soap = user.stock_soap_b1t1 + user.stock_soap_b2t3;
 
       await user.save();
 

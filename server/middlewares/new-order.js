@@ -55,7 +55,7 @@ export async function initializeNewOrder(req, res, next) {
   }
 }
 
-export async function orderBuy1Take1(req, res, next) {
+export async function orderStock(req, res, next) {
   const body = req.body;
 
   if (body.package == "b1t1") {
@@ -64,84 +64,62 @@ export async function orderBuy1Take1(req, res, next) {
 
     req.coffee_total_price = body.coffee_package * COFFEE_B1T1_SRP;
     req.soap_total_price = body.soap_package * SOAP_B1T1_SRP;
-  }
 
-  next();
-}
-
-export async function orderBuy2Take3(req, res, next) {
-  const body = req.body;
-
-  if (body.package == "b2t3") {
+    await updateSellerStockB1t1(req, res, next);
+  } else if (body.package == "b2t3") {
     req.coffee_box = body.coffee_package * 2 + body.coffee_package * 3;
     req.soap_box = body.soap_package * 2 + body.soap_package * 3;
 
     req.coffee_total_price = body.coffee_package * COFFEE_B2T3_SRP;
     req.soap_total_price = body.soap_package * SOAP_B2T3_SRP;
-  }
 
-  next();
-}
-
-export async function updateSellerStock(req, res, next) {
-  const seller = req.seller;
-  const coffee_ordered = req.coffee_box;
-  const soap_ordered = req.soap_box;
-
-  const can_stock_coffee =
-    seller.stock_coffee >= coffee_ordered || coffee_ordered == 0;
-
-  const can_stock_soap = seller.stock_soap >= soap_ordered || soap_ordered == 0;
-
-  if (
-    can_stock_coffee &&
-    can_stock_soap &&
-    (coffee_ordered != 0 || soap_ordered != 0)
-  ) {
-    if (seller.stock_coffee != undefined && seller.stock_coffee > 0) {
-      seller.stock_coffee = seller.stock_coffee - coffee_ordered;
-    }
-
-    if (seller.stock_soap != undefined && seller.stock_soap > 0) {
-      seller.stock_soap = seller.stock_soap - soap_ordered;
-    }
-
-    await seller.save();
-
-    next();
-  } else {
-    if (can_stock_coffee == false && can_stock_soap == false) {
-      res.status(401).send({
-        message: "Your out of stock of coffee and soap",
-      });
-    } else if (can_stock_coffee == false) {
-      res.status(401).send({
-        message: "Your out of stock of coffee",
-      });
-    } else if (can_stock_soap == false) {
-      res.status(401).send({
-        message: "Your out of stock of soap",
-      });
-    }
+    await updateSellerStockB2t3(req, res, next);
   }
 }
 
-export async function updateBuyerStock(req, res, next) {
+export async function updateStock(req, res, next) {
   const buyer = req.buyer;
   const coffee_ordered = req.coffee_box;
   const soap_ordered = req.soap_box;
 
-  buyer.stock_coffee = buyer.stock_coffee
-    ? buyer.stock_coffee + coffee_ordered
-    : coffee_ordered;
+  if (req.body.package == "b1t1") {
+    buyer.stock_coffee_b1t1 = buyer.stock_coffee_b1t1
+      ? buyer.stock_coffee_b1t1 + coffee_ordered
+      : coffee_ordered;
 
-  buyer.stock_soap = buyer.stock_soap
-    ? buyer.stock_soap + soap_ordered
-    : soap_ordered;
+    buyer.stock_soap_b1t1 = buyer.stock_soap_b1t1
+      ? buyer.stock_soap_b1t1 + soap_ordered
+      : soap_ordered;
 
-  await buyer.save();
+    buyer.stock_coffee = buyer.stock_coffee
+      ? buyer.stock_coffee + coffee_ordered
+      : coffee_ordered;
 
-  next();
+    buyer.stock_soap = buyer.stock_soap
+      ? buyer.stock_soap + soap_ordered
+      : soap_ordered;
+
+    await buyer.save();
+  } else if (req.body.package == "b2t3") {
+    buyer.stock_coffee_b2t3 = buyer.stock_coffee_b2t3
+      ? buyer.stock_coffee_b2t3 + coffee_ordered
+      : coffee_ordered;
+
+    buyer.stock_soap_b2t3 = buyer.stock_soap_b2t3
+      ? buyer.stock_soap_b2t3 + soap_ordered
+      : soap_ordered;
+
+    buyer.stock_coffee = buyer.stock_coffee
+      ? buyer.stock_coffee + coffee_ordered
+      : coffee_ordered;
+
+    buyer.stock_soap = buyer.stock_soap
+      ? buyer.stock_soap + soap_ordered
+      : soap_ordered;
+
+    await buyer.save();
+    next();
+  }
 }
 
 export async function createPurchase(req, res, next) {
@@ -1050,5 +1028,95 @@ async function createTotalIncome(user, type, total_income) {
     });
 
     await totalIncome.save();
+  }
+}
+
+async function updateSellerStockB1t1(req, res, next) {
+  const seller = req.seller;
+  const coffee_ordered = req.coffee_box;
+  const soap_ordered = req.soap_box;
+
+  const can_stock_coffee =
+    seller.stock_coffee_b1t1 >= coffee_ordered || coffee_ordered == 0;
+
+  const can_stock_soap =
+    seller.stock_soap_b1t1 >= soap_ordered || soap_ordered == 0;
+
+  if (
+    can_stock_coffee &&
+    can_stock_soap &&
+    (coffee_ordered != 0 || soap_ordered != 0)
+  ) {
+    if (seller.stock_coffee_b1t1 != undefined && seller.stock_coffee_b1t1 > 0) {
+      seller.stock_coffee_b1t1 = seller.stock_coffee_b1t1 - coffee_ordered;
+      seller.stock_coffee = seller.stock_coffee - coffee_ordered;
+    }
+
+    if (seller.stock_soap_b1t1 != undefined && seller.stock_soap_b1t1 > 0) {
+      seller.stock_soap_b1t1 = seller.stock_soap_b1t1 - soap_ordered;
+      seller.stock_soap = seller.stock_soap - soap_ordered;
+    }
+
+    await seller.save();
+    next();
+  } else {
+    if (can_stock_coffee == false && can_stock_soap == false) {
+      res.status(401).send({
+        message: "Your out of stock of coffee and soap",
+      });
+    } else if (can_stock_coffee == false) {
+      res.status(401).send({
+        message: "Your out of stock of coffee",
+      });
+    } else if (can_stock_soap == false) {
+      res.status(401).send({
+        message: "Your out of stock of soap",
+      });
+    }
+  }
+}
+
+async function updateSellerStockB2t3(req, res, next) {
+  const seller = req.seller;
+  const coffee_ordered = req.coffee_box;
+  const soap_ordered = req.soap_box;
+
+  const can_stock_coffee =
+    seller.stock_coffee_b2t3 >= coffee_ordered || coffee_ordered == 0;
+
+  const can_stock_soap =
+    seller.stock_soap_b2t3 >= soap_ordered || soap_ordered == 0;
+
+  if (
+    can_stock_coffee &&
+    can_stock_soap &&
+    (coffee_ordered != 0 || soap_ordered != 0)
+  ) {
+    if (seller.stock_coffee_b2t3 != undefined && seller.stock_coffee_b2t3 > 0) {
+      seller.stock_coffee_b2t3 = seller.stock_coffee_b2t3 - coffee_ordered;
+      seller.stock_coffee = seller.stock_coffee - coffee_ordered;
+    }
+
+    if (seller.stock_soap_b2t3 != undefined && seller.stock_soap_b2t3 > 0) {
+      seller.stock_soap_b2t3 = seller.stock_soap_b2t3 - soap_ordered;
+      seller.stock_soap = seller.stock_soap - soap_ordered;
+    }
+
+    await seller.save();
+    next();
+  } else {
+    if (can_stock_coffee == false && can_stock_soap == false) {
+      res.status(401).send({
+        message: "Your out of stock of coffee and soap",
+      });
+    } else if (can_stock_coffee == false) {
+      res.status(401).send({
+        message: "Your out of stock of coffee",
+      });
+    } else if (can_stock_soap == false) {
+      res.status(401).send({
+        message: "Your out of stock of soap",
+      });
+    }
   }
 }

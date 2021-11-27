@@ -351,5 +351,128 @@
         </h5>
       </div>
     </div>
+
+    <ng-container
+      *ngIf="
+        (user$ | async)?.is_mega_center ||
+        (user$ | async)?.is_stockist ||
+        (user$ | async)?.is_admin
+      "
+    >
+      <mat-divider></mat-divider>
+
+      <div class="row" matRipple>
+        <div>
+          <h4>Inventory Stock</h4>
+        </div>
+        <div>
+          <h4>Amount</h4>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        matRipple
+        [routerLink]="['/incomes']"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>B1T1 Coffee</h5>
+        </div>
+
+        <div class="amount">
+          <h5>
+            {{ (user$ | async)?.stock_coffee_b1t1 }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        matRipple
+        [routerLink]="['/incomes']"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>B2T3 Coffee</h5>
+        </div>
+
+        <div class="amount">
+          <h5>
+            {{ (user$ | async)?.stock_coffee_b2t3 }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        matRipple
+        [routerLink]="['/incomes']"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>B1T1 Soap</h5>
+        </div>
+
+        <div class="amount">
+          <h5>
+            {{ (user$ | async)?.stock_soap_b1t1 }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        matRipple
+        [routerLink]="['/incomes']"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>B2T3 Soap</h5>
+        </div>
+
+        <div class="amount">
+          <h5>
+            {{ (user$ | async)?.stock_soap_b2t3 }}
+          </h5>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div
+        class="row"
+        matRipple
+        [routerLink]="['/incomes']"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>Total Coffee</h5>
+        </div>
+
+        <div class="amount">
+          <h5 class="primary">
+            {{ (user$ | async)?.stock_coffee }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        matRipple
+        [routerLink]="['/incomes']"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>Total Soap</h5>
+        </div>
+
+        <div class="amount">
+          <h5 class="primary">
+            {{ (user$ | async)?.stock_soap }}
+          </h5>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

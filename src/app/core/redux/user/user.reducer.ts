@@ -23,6 +23,12 @@ export interface UserState {
   stock_coffee?: number;
   stock_soap?: number;
 
+  stock_coffee_b1t1?: number;
+  stock_soap_b1t1?: number;
+
+  stock_coffee_b2t3?: number;
+  stock_soap_b2t3?: number;
+
   b1t1_ae_rebates?: number;
   b2t3_ae_rebates?: number;
 

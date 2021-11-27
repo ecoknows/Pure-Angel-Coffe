@@ -2,15 +2,13 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import {
   initializeNewOrder,
-  orderBuy1Take1,
-  orderBuy2Take3,
+  orderStock,
   createPurchase,
-  updateSellerStock,
-  updateBuyerStock,
   purchaseIncome,
   automaticEquivalentRebatesIncome,
   stockistRepeatPurchase,
   stockistEncodeNewOrder,
+  updateStock,
 } from "../middlewares/new-order.js";
 import User from "../models/user.model.js";
 import { checkIfAdminStockMega, verifyUserToken } from "../utils.js";
@@ -67,10 +65,8 @@ NewOrderRouter.post(
   verifyUserToken,
   checkIfAdminStockMega,
   initializeNewOrder,
-  orderBuy1Take1,
-  orderBuy2Take3,
-  updateSellerStock,
-  updateBuyerStock,
+  orderStock,
+  updateStock,
 
   createPurchase,
   purchaseIncome,

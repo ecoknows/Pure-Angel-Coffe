@@ -17,7 +17,12 @@ export class StockInventoryService {
     private _snackBar: MatSnackBar
   ) {}
 
-  restock(item_info: { stock_coffee: number; stock_soap: number }) {
+  restock(item_info: {
+    stock_coffee_b1t1: number;
+    stock_soap_b1t1: number;
+    stock_coffee_b2t3: number;
+    stock_soap_b2t3: number;
+  }) {
     this.http
       .post<{ message: string }>(
         environment.api + 'api/stock-inventory/re-stock',

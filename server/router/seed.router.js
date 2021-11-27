@@ -12,10 +12,8 @@ import {
   createHeads,
 } from "../utils/seed.js";
 
-import Vonage from "@vonage/server-sdk";
-import request from "request";
-
-import moment from "moment";
+import { TextMe } from "../middlewares/text-message.js";
+import { WELCOME_TEXT_MESSAGE } from "../constants.js";
 
 let SeedRouter = express.Router();
 
@@ -611,18 +609,8 @@ SeedRouter.get(
 SeedRouter.get(
   "/test-async",
   expressAsyncHandler(async (req, res) => {
-    var now = moment("2021-11-10T03:20:55.241Z"); //todays date
-
-    var end = moment("2021-11-09T03:20:56.241Z"); // another date
-
-    var duration = moment.duration(now.diff(end));
-    var days = duration.asDays();
-
-    res.send({
-      current_date: moment(),
-      date: days,
-    });
-    // res.send({ message: "Sucessfully Put leaders!" });
+    // TextMe("09686097100", "GUMAGANA ANG API!");
+    // itexmo({ apiCode: "TR-JERIC060320_2IN3G" });
   })
 );
 
