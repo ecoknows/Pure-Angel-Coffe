@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CashoutDialogComponent } from './components/cashout-dialog/cashout-dialog.component';
-import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

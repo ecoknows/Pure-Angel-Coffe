@@ -50,6 +50,10 @@ import { MegaCenterInfoComponent } from './new-order/components/mega-center-info
 import { MatTableModule } from '@angular/material/table';
 import { GivePinStockistComponent } from './mega-center/components/give-pin-stockist/give-pin-stockist.component';
 import { PinHistoryComponent } from './admin/components/create-new-pin/components/pin-history/pin-history.component';
+import { HomeComponent } from './home/home.component';
+import { HomeTopBarComponent } from './home/components/home-top-bar/home-top-bar.component';
+import { HomeSideBarComponent } from './home/components/home-side-bar/home-side-bar.component';
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -77,6 +81,9 @@ import { PinHistoryComponent } from './admin/components/create-new-pin/component
     MegaCenterInfoComponent,
     GivePinStockistComponent,
     PinHistoryComponent,
+    HomeComponent,
+    HomeTopBarComponent,
+    HomeSideBarComponent,
   ],
   imports: [
     NgxChartsModule,
@@ -104,5 +111,6 @@ import { PinHistoryComponent } from './admin/components/create-new-pin/component
     MatButtonToggleModule,
     MatTableModule,
   ],
+  exports: [HomeTopBarComponent, HomeSideBarComponent],
 })
 export class FeaturesModule {}

@@ -16,6 +16,7 @@ import { MegaCenterGuardService } from '@features/mega-center/services/mega-cent
 import { NewMemberComponent } from '@features/new-member/new-member.component';
 import { NewOrderComponent } from '@features/new-order/new-order.component';
 import { StockInventoryComponent } from '@features/stock-inventory/stock-inventory.component';
+import { HomeComponent } from '@features/home/home.component';
 
 import {
   DashboardComponent,
@@ -29,6 +30,10 @@ import {
 const routes: Routes = [
   {
     path: '',
+    component: HomeComponent,
+  },
+  {
+    path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuardService],
   },

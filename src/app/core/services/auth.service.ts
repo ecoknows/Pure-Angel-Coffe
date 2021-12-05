@@ -42,7 +42,7 @@ export class AuthService {
           let userToken = response.userToken;
           if (userToken) {
             localStorage.setItem('user-token', userToken);
-            this.router.navigate(['/']);
+            this.router.navigate(['dashboard']);
             this.sideBarService.show();
             this.topBarService.show();
             this.resetStates();

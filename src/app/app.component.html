@@ -9,8 +9,17 @@
       *ngIf="sideBarService.visibility"
       [drawer]="drawer"
     ></app-side-bar>
+    <app-home-side-bar
+      *ngIf="homeSideBarService.visibility"
+      [drawer]="drawer"
+    ></app-home-side-bar>
   </mat-drawer>
   <app-top-bar [drawer]="drawer" *ngIf="topBarService.visibility"></app-top-bar>
+  <app-home-top-bar
+    [drawer]="drawer"
+    *ngIf="homeTopBarService.visibility"
+  ></app-home-top-bar>
+
   <app-side-bar
     *ngIf="sideBarService.visibility"
     class="big-screen-side-bar"

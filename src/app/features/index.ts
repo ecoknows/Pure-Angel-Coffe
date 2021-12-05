@@ -1,10 +1,12 @@
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
 import { GenealogyComponent } from './genealogy/genealogy.component';
 import { LoginComponent } from './login/login.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { IncomeHistoryComponent } from './income-history/income-history.component';
 
 export const components: any[] = [
+  HomeComponent,
   DashboardComponent,
   LoginComponent,
   NotificationsComponent,
@@ -12,6 +14,7 @@ export const components: any[] = [
   IncomeHistoryComponent,
 ];
 
+export * from './home/home.component';
 export * from './dashboard/dashboard.component';
 export * from './login/login.component';
 export * from './notifications/notifications.component';

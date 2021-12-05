@@ -1,8 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UserState } from '@core/redux/user/user.reducer';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { SearchComponent } from '../search/search.component';
 
 @Component({

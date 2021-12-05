@@ -3,9 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class SidebarService {
-  visibility: boolean = true;
-  buttonShow: any;
+export class HomeTopBarService {
+  visibility: boolean = false;
 
   hide() {
     this.visibility = false;

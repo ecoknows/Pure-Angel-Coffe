@@ -10,7 +10,6 @@ import { environment } from '../environments/environment';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from '@core/services/interceptor.service';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { SharedModule } from '@shared/shared.module';
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +19,6 @@ import { SharedModule } from '@shared/shared.module';
     CoreModule,
     FeaturesModule,
     MatProgressBarModule,
-    MatSidenavModule,
     SharedModule,
 
     StoreDevtoolsModule.instrument({

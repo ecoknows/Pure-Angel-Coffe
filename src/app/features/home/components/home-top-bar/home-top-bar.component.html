@@ -1,0 +1,29 @@
+<button class="burger-menu" (click)="drawer.toggle()">
+  <mat-icon class="menu-icon">menu</mat-icon>
+</button>
+
+<header>
+  <div class="container">
+    <div class="logo">
+      <img src="assets/img/logo.png" alt="logo" id="logo" />
+    </div>
+    <nav>
+      <ul>
+        <li>
+          <a routerLink="/" routerLinkActive="primary"> Home </a>
+        </li>
+        <li><a> About Us </a></li>
+        <li><a> Contact Us </a></li>
+        <li>
+          <a
+            routerLink="dashboard"
+            class="products"
+            (click)="closeHomeTopBar()"
+          >
+            Dashboard
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

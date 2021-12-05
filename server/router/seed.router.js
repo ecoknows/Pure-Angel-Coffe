@@ -614,4 +614,23 @@ SeedRouter.get(
   })
 );
 
+SeedRouter.get(
+  "/modify-stocks",
+  expressAsyncHandler(async (req, res) => {
+    const users = await UserVerification.find({
+      $or: [{ stock_coffee: { $gt: 0 } }, { stock_soap: { $gt: 0 } }],
+    });
+
+    for (let i = 0; i < users.length; i++) {
+      const user = await UserVerification.findById(users[i]);
+      user.stock_coffee_b1t1 = user.stock_coffee;
+      user.stock_soap_b1t1 = user.stock_soap;
+
+      await user.save();
+    }
+
+    res.send({ length: users.length, message: users });
+  })
+);
+
 export default SeedRouter;

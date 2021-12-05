@@ -1,0 +1,83 @@
+@import 'responsive'
+@import 'variable'
+
+.burger-menu
+  position: absolute
+  right: 0
+  top: 0
+  margin: 25px 25px 0 0
+  z-index: 2
+
+  @include media('>=lg')
+    display: none
+  @include media('<lg')
+    margin: 15px 15px 0 0
+
+header
+  position: fixed
+  padding: 20px 0
+  width: 100%
+  top: 0px
+  height: 84px
+  box-shadow: 0 6px 9px 0 rgb(0 0 0 / 6%)
+  background: white
+  z-index: 1
+
+  @include media('<lg')
+    height: 54px
+
+
+.menu-icon
+  font-size: 24px
+  color: $icon-gray
+
+.logo
+  position: absolute
+  top: 5px
+  margin-left: 10px
+
+
+#logo
+
+  @include media('<lg')
+    width: 40px
+
+.container
+  height: 100%
+
+  @include container()
+
+.primary
+  color: $primaryColor
+  font-weight: bold
+
+
+nav
+  float: right
+  margin: 0
+
+  @include media('<lg')
+    display: none
+
+
+  li
+    float: left
+
+  a
+    display: inline-block
+    padding: 13px 12px
+    position: relative
+    border-radius: 5px
+    margin-left: 10px
+    font-size: 14px
+    height: 100%
+    cursor: pointer
+    outline: none
+
+    font-weight: 700
+    font-family: raleway,sans-serif
+
+  .products
+    background: $primaryColor
+    color: white
+    height: 100%

@@ -24,6 +24,7 @@ export async function upgradeToStockist(req, res, next) {
 
   if (body.status == "stockist") {
     searched_account.is_stockist = true;
+    searched_account.secret_code_suffix = body.assign_area;
     searched_account.is_mega_center = undefined;
     await searched_account.save();
   }

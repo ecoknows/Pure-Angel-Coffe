@@ -1,0 +1,50 @@
+@import 'responsive'
+@import 'variable'
+
+
+.intro
+  height: 130vh
+
+  @include media('<lg')
+    padding-top: 54px
+
+
+.cover
+  position: relative
+  padding-bottom: 65.25%
+  height: 0px
+
+  .image
+    position: absolute
+    left: 0px
+    top: 0px
+    right: 0px
+    bottom: 0px
+    height: 100%
+    width: 100%
+
+.parallax
+  background-color: rgba(255,255,255,.7)
+  // background-attachment: fixed
+  background-position: top
+  background-repeat: no-repeat
+  background-size: cover
+
+
+  @include media('<lg')
+    background-size: contain
+
+.videowrapper
+  position: relative
+  padding-bottom: 56.25%
+  padding-top: 25px
+  height: 0px
+
+  iframe
+    position: absolute
+    left: 0px
+    top: 0px
+    right: 0px
+    bottom: 0px
+    height: 100%
+    width: 100%

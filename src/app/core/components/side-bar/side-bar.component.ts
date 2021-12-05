@@ -24,7 +24,7 @@ export class SideBarComponent implements OnInit {
   @Input('drawer') drawer: any;
   menus = [
     {
-      url: '',
+      url: 'dashboard',
       name: 'Dashboard',
       icon: faDesktop,
     },
@@ -33,16 +33,6 @@ export class SideBarComponent implements OnInit {
       name: 'Genealogy',
       icon: faTree,
     },
-    // {
-    //   url: 'referrals',
-    //   name: 'Referrals',
-    //   icon: faUsers,
-    // },
-    // {
-    //   url: 'notifications',
-    //   name: 'Notifications',
-    //   icon: faBell,
-    // },
     {
       url: 'setting',
       name: 'Setting',

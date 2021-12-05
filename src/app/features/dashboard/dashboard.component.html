@@ -352,13 +352,7 @@
       </div>
     </div>
 
-    <ng-container
-      *ngIf="
-        (user$ | async)?.is_mega_center ||
-        (user$ | async)?.is_stockist ||
-        (user$ | async)?.is_admin
-      "
-    >
+    <ng-container>
       <mat-divider></mat-divider>
 
       <div class="row" matRipple>
@@ -382,7 +376,7 @@
 
         <div class="amount">
           <h5>
-            {{ (user$ | async)?.stock_coffee_b1t1 }}
+            {{ (user$ | async)?.stock_coffee_b1t1 || 0 }}
           </h5>
         </div>
       </div>
@@ -399,7 +393,7 @@
 
         <div class="amount">
           <h5>
-            {{ (user$ | async)?.stock_coffee_b2t3 }}
+            {{ (user$ | async)?.stock_coffee_b2t3 || 0 }}
           </h5>
         </div>
       </div>
@@ -416,7 +410,7 @@
 
         <div class="amount">
           <h5>
-            {{ (user$ | async)?.stock_soap_b1t1 }}
+            {{ (user$ | async)?.stock_soap_b1t1 || 0 }}
           </h5>
         </div>
       </div>
@@ -433,7 +427,7 @@
 
         <div class="amount">
           <h5>
-            {{ (user$ | async)?.stock_soap_b2t3 }}
+            {{ (user$ | async)?.stock_soap_b2t3 || 0 }}
           </h5>
         </div>
       </div>
@@ -452,7 +446,7 @@
 
         <div class="amount">
           <h5 class="primary">
-            {{ (user$ | async)?.stock_coffee }}
+            {{ (user$ | async)?.stock_coffee || 0 }}
           </h5>
         </div>
       </div>
@@ -469,7 +463,7 @@
 
         <div class="amount">
           <h5 class="primary">
-            {{ (user$ | async)?.stock_soap }}
+            {{ (user$ | async)?.stock_soap || 0 }}
           </h5>
         </div>
       </div>

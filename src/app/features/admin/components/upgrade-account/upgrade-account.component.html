@@ -74,10 +74,14 @@
         <mat-button-toggle value="stockist">Stockist</mat-button-toggle>
         <mat-button-toggle value="mega-center">Mega Center</mat-button-toggle>
       </mat-button-toggle-group>
+      <br />
 
       <mat-form-field
         appearance="fill"
-        *ngIf="secondFormGroup.get('status')?.value == 'mega-center'"
+        *ngIf="
+          secondFormGroup.get('status')?.value == 'mega-center' ||
+          secondFormGroup.get('status')?.value == 'stockist'
+        "
       >
         <mat-label>Assign Area</mat-label>
         <input

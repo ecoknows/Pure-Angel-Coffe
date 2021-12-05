@@ -17,6 +17,7 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { SearchComponent } from './components/search/search.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SearchComponent } from './components/search/search.component';
     ReactiveFormsModule,
     MatToolbarModule,
     MatIconModule,
+    MatSidenavModule,
   ],
-  exports: [TopBarComponent],
+  exports: [TopBarComponent, MatToolbarModule, MatIconModule, MatSidenavModule],
 })
 export class SharedModule {}
