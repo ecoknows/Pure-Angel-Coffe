@@ -14,6 +14,7 @@ export class HomeComponent {
     private topBarService: TopBarService,
     private homeTopBarService: HomeTopBarService
   ) {
+    // HIDE ALL
     this.sideBarService.hide();
     this.topBarService.hide();
     this.homeTopBarService.show();
