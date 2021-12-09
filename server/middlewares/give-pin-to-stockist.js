@@ -49,8 +49,10 @@ export async function checkStock(req, res, next) {
 
   if (mega_center_account_verification) {
     if (
-      mega_center_account_verification.stock_coffee >= 5 * number_of_pin &&
-      mega_center_account_verification.stock_soap >= 4 * number_of_pin
+      mega_center_account_verification.pin_stock_coffee >=
+        COFFEE_PACKAGE_PER_PIN * number_of_pin &&
+      mega_center_account_verification.pin_stock_soap >=
+        SOAP_PACKAGE_PER_PIN * number_of_pin
     ) {
       next();
     } else {
@@ -74,11 +76,13 @@ export async function updatePin(req, res, next) {
     ? searched_account.number_of_pin + number_of_pin
     : number_of_pin;
 
-  mega_center_account.number_of_pin =
-    mega_center_account.number_of_pin - number_of_pin;
+  mega_center_account.number_of_pin = mega_center_account.number_of_pin
+    ? mega_center_account.number_of_pin - number_of_pin
+    : 0;
 
-  mega_center_account.ending_pin =
-    mega_center_account.ending_pin + number_of_pin;
+  mega_center_account.ending_pin = mega_center_account.ending_pin
+    ? mega_center_account.ending_pin + number_of_pin
+    : number_of_pin;
 
   await searched_account.save();
   await mega_center_account.save();
@@ -92,6 +96,16 @@ export async function updateStock(req, res, next) {
   const number_of_pin = req.number_of_pin;
   const total_coffee_added = number_of_pin * COFFEE_PACKAGE_PER_PIN;
   const total_soap_added = number_of_pin * SOAP_PACKAGE_PER_PIN;
+
+  searched_account_verification.pin_stock_coffee =
+    searched_account_verification.pin_stock_coffee
+      ? searched_account_verification.pin_stock_coffee + total_coffee_added
+      : total_coffee_added;
+
+  searched_account_verification.pin_stock_soap =
+    searched_account_verification.pin_stock_soap
+      ? searched_account_verification.pin_stock_soap + total_soap_added
+      : total_soap_added;
 
   searched_account_verification.stock_coffee =
     searched_account_verification.stock_coffee
@@ -122,8 +136,15 @@ export async function updateMegaCenterStock(req, res, next) {
   const total_coffee_added = number_of_pin * COFFEE_PACKAGE_PER_PIN;
   const total_soap_added = number_of_pin * SOAP_PACKAGE_PER_PIN;
 
+  mega_center_account_verification.pin_stock_coffee =
+    mega_center_account_verification.pin_stock_coffee - total_coffee_added;
+
+  mega_center_account_verification.pin_stock_soap =
+    mega_center_account_verification.pin_stock_soap - total_soap_added;
+
   mega_center_account_verification.stock_coffee =
     mega_center_account_verification.stock_coffee - total_coffee_added;
+
   mega_center_account_verification.stock_soap =
     mega_center_account_verification.stock_soap - total_soap_added;
 

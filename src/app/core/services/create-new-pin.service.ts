@@ -43,7 +43,7 @@ export class CreateNewPinService {
       .subscribe(
         (response) => {
           const data = response.data;
-          if (data && data.user.is_mega_center) {
+          if ((data && data.user.is_mega_center) || data.user.is_stockist) {
             stepper.next();
             this.store.dispatch(setSearchAccount({ user: data.user }));
             this.store.dispatch(
@@ -57,7 +57,7 @@ export class CreateNewPinService {
               panelClass: ['snackbar-background'],
               data: {
                 message:
-                  'Sorry this account is unable, it is not a mega center',
+                  'Sorry this account is unable, it is not a mega center or a stockist',
                 error: true,
               },
             });

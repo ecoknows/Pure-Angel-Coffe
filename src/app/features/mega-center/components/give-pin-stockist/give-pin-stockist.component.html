@@ -12,12 +12,21 @@
     >
       Out of Stock</span
     >
+    <div>
+      <strong>AVAILABLE PIN STOCK :</strong>
+      <span>
+        {{ (user$ | async)?.pin_stock_coffee || 0 }} Coffee,
+        {{ (user$ | async)?.pin_stock_soap || 0 }} Soap
+      </span>
+    </div>
+
     <div style="margin-top: 5px" *ngIf="(user$ | async)?.number_of_pin">
       <strong>PINS RANGE :</strong>
       <span>
         {{ pinRange(user$ | async) }}
       </span>
     </div>
+
     <div style="margin-top: 5px">
       <strong>View PIN History :</strong>
       <span matRipple class="click-here" routerLink="pin-history"
@@ -146,8 +155,8 @@
         </li>
         <li>
           New PINS :
-          <span *ngIf="(user$ | async)?.ending_pin != undefined"
-            >{{ (user$ | async)?.secret_code_suffix || 0 }}0{{
+          <span
+            >{{ (searchAccount$ | async)?.secret_code_suffix || 0 }}0{{
               startingPin(searchAccount$ | async, user$ | async)
             }}
             to {{ (searchAccount$ | async)?.secret_code_suffix || 0 }}0{{

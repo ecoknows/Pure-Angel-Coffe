@@ -139,7 +139,8 @@
       <ng-container
         *ngIf="
           !(searchAccount$ | async)?.is_admin &&
-          !(searchAccount$ | async)?.is_mega_center
+          !(searchAccount$ | async)?.is_mega_center &&
+          !(searchAccount$ | async)?.is_stockist
         "
       >
         <app-referral-info
@@ -157,9 +158,11 @@
         <mat-divider style="margin-bottom: 10px"></mat-divider>
       </ng-container>
 
-      <app-seller-info
-        [secondFormGroup]="this.secondFormGroup"
-      ></app-seller-info>
+      <ng-container *ngIf="!(searchAccount$ | async)?.is_stockist">
+        <app-seller-info
+          [secondFormGroup]="this.secondFormGroup"
+        ></app-seller-info>
+      </ng-container>
 
       <div *ngIf="searchAccount$ | async as searchAccount">
         <button mat-button matStepperPrevious>Back</button>

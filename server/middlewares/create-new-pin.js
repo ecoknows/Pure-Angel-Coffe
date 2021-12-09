@@ -22,7 +22,9 @@ export async function initializeAccount(req, res, next) {
   if (
     searched_account &&
     verification_account &&
-    (searched_account.is_mega_center || searched_account.is_admin)
+    (searched_account.is_mega_center ||
+      searched_account.is_admin ||
+      searched_account.is_stockist)
   ) {
     req.searched_account = searched_account;
     req.verification_account = verification_account;
@@ -42,8 +44,8 @@ export async function checkStock(req, res, next) {
 
   if (admin_user) {
     if (
-      admin_user.stock_coffee >= 5 * number_of_pin &&
-      admin_user.stock_soap >= 4 * number_of_pin
+      admin_user.stock_coffee >= COFFEE_PACKAGE_PER_PIN * number_of_pin &&
+      admin_user.stock_soap >= SOAP_PACKAGE_PER_PIN * number_of_pin
     ) {
       next();
     } else {
@@ -73,6 +75,14 @@ export async function updateStock(req, res, next) {
   const number_of_pin = req.number_of_pin;
   const total_coffee_added = number_of_pin * COFFEE_PACKAGE_PER_PIN;
   const total_soap_added = number_of_pin * SOAP_PACKAGE_PER_PIN;
+
+  verification_account.pin_stock_coffee = verification_account.pin_stock_coffee
+    ? verification_account.pin_stock_coffee + total_coffee_added
+    : total_coffee_added;
+
+  verification_account.pin_stock_soap = verification_account.pin_stock_soap
+    ? verification_account.pin_stock_soap + total_soap_added
+    : total_soap_added;
 
   verification_account.stock_coffee = verification_account.stock_coffee
     ? verification_account.stock_coffee + total_coffee_added

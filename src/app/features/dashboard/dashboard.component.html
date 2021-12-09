@@ -363,76 +363,115 @@
           <h4>Amount</h4>
         </div>
       </div>
-
-      <div
-        class="row"
-        matRipple
-        [routerLink]="['/incomes']"
-        [queryParams]="{ income: 'product-voucher' }"
+      <ng-container
+        *ngIf="(user$ | async)?.is_stockist || (user$ | async)?.is_mega_center"
       >
-        <div class="income">
-          <h5>B1T1 Coffee</h5>
+        <div
+          class="row"
+          matRipple
+          [routerLink]="['/incomes']"
+          [queryParams]="{ income: 'product-voucher' }"
+        >
+          <div class="income">
+            <h5>Pin Coffee</h5>
+          </div>
+
+          <div class="amount">
+            <h5>
+              {{ (user$ | async)?.pin_stock_coffee || 0 }}
+            </h5>
+          </div>
         </div>
 
-        <div class="amount">
-          <h5>
-            {{ (user$ | async)?.stock_coffee_b1t1 || 0 }}
-          </h5>
-        </div>
-      </div>
+        <div
+          class="row"
+          matRipple
+          [routerLink]="['/incomes']"
+          [queryParams]="{ income: 'product-voucher' }"
+        >
+          <div class="income">
+            <h5>Pin Soap</h5>
+          </div>
 
-      <div
-        class="row"
-        matRipple
-        [routerLink]="['/incomes']"
-        [queryParams]="{ income: 'product-voucher' }"
-      >
-        <div class="income">
-          <h5>B2T3 Coffee</h5>
+          <div class="amount">
+            <h5>
+              {{ (user$ | async)?.pin_stock_soap || 0 }}
+            </h5>
+          </div>
         </div>
+      </ng-container>
 
-        <div class="amount">
-          <h5>
-            {{ (user$ | async)?.stock_coffee_b2t3 || 0 }}
-          </h5>
-        </div>
-      </div>
+      <ng-container *ngIf="!(user$ | async)?.is_admin">
+        <div
+          class="row"
+          matRipple
+          [routerLink]="['/incomes']"
+          [queryParams]="{ income: 'product-voucher' }"
+        >
+          <div class="income">
+            <h5>B1T1 Coffee</h5>
+          </div>
 
-      <div
-        class="row"
-        matRipple
-        [routerLink]="['/incomes']"
-        [queryParams]="{ income: 'product-voucher' }"
-      >
-        <div class="income">
-          <h5>B1T1 Soap</h5>
-        </div>
-
-        <div class="amount">
-          <h5>
-            {{ (user$ | async)?.stock_soap_b1t1 || 0 }}
-          </h5>
-        </div>
-      </div>
-
-      <div
-        class="row"
-        matRipple
-        [routerLink]="['/incomes']"
-        [queryParams]="{ income: 'product-voucher' }"
-      >
-        <div class="income">
-          <h5>B2T3 Soap</h5>
+          <div class="amount">
+            <h5>
+              {{ (user$ | async)?.stock_coffee_b1t1 || 0 }}
+            </h5>
+          </div>
         </div>
 
-        <div class="amount">
-          <h5>
-            {{ (user$ | async)?.stock_soap_b2t3 || 0 }}
-          </h5>
-        </div>
-      </div>
+        <div
+          class="row"
+          matRipple
+          [routerLink]="['/incomes']"
+          [queryParams]="{ income: 'product-voucher' }"
+        >
+          <div class="income">
+            <h5>B2T3 Coffee</h5>
+          </div>
 
-      <mat-divider></mat-divider>
+          <div class="amount">
+            <h5>
+              {{ (user$ | async)?.stock_coffee_b2t3 || 0 }}
+            </h5>
+          </div>
+        </div>
+
+        <div
+          class="row"
+          matRipple
+          [routerLink]="['/incomes']"
+          [queryParams]="{ income: 'product-voucher' }"
+        >
+          <div class="income">
+            <h5>B1T1 Soap</h5>
+          </div>
+
+          <div class="amount">
+            <h5>
+              {{ (user$ | async)?.stock_soap_b1t1 || 0 }}
+            </h5>
+          </div>
+        </div>
+
+        <div
+          class="row"
+          matRipple
+          [routerLink]="['/incomes']"
+          [queryParams]="{ income: 'product-voucher' }"
+        >
+          <div class="income">
+            <h5>B2T3 Soap</h5>
+          </div>
+
+          <div class="amount">
+            <h5>
+              {{ (user$ | async)?.stock_soap_b2t3 || 0 }}
+            </h5>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+      </ng-container>
 
       <div
         class="row"

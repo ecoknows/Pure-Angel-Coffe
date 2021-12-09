@@ -137,6 +137,18 @@ export class NewMemberComponent implements OnInit {
           const starting = (user.ending_pin + 1).toString();
           const ending = (user.ending_pin + user.number_of_pin).toString();
 
+          if (user.is_stockist) {
+            return (
+              user.stockist_area_code +
+              '0' +
+              starting +
+              ' to ' +
+              user.stockist_area_code +
+              '0' +
+              ending
+            );
+          }
+
           return (
             user.secret_code_suffix +
             '0' +

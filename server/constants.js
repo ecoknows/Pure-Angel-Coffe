@@ -29,7 +29,7 @@ export const SOAP_B2T3_MEGA_CENTER_INCOME = 37.5; // 40.50 PER BOX SOAP
 export const SOAP_B2T3_STOCKIST_INCOME = 27.5; // 42.50 PER BOX SOAP
 export const SOAP_B2T3_AE_REBATES = 12.5;
 
-export const COFFEE_PACKAGE_PER_PIN = 4;
+export const COFFEE_PACKAGE_PER_PIN = 3;
 export const SOAP_PACKAGE_PER_PIN = 3;
 
 export const ADMIN_PURCHASE_INCOME = 5;

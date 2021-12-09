@@ -87,7 +87,9 @@ export async function createChildUser(req, res, next) {
     last_name: body.last_name,
 
     contact_number: body.contact_number,
-    secret_code_suffix: referral_user.secret_code_suffix,
+    secret_code_suffix: referral_user.is_stockist
+      ? referral_user.stockist_area_code
+      : referral_user.secret_code_suffix,
 
     mega_center: referral_user?.is_mega_center
       ? {

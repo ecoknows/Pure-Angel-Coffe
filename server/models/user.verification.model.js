@@ -29,6 +29,9 @@ const userVerificationSchema = new mongoose.Schema(
     stock_coffee: { type: Number },
     stock_soap: { type: Number },
 
+    pin_stock_coffee: { type: Number },
+    pin_stock_soap: { type: Number },
+
     stock_coffee_b1t1: { type: Number },
     stock_soap_b1t1: { type: Number },
 

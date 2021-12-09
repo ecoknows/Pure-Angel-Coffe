@@ -2,55 +2,81 @@
   <h1 class="primary">Stock Inventory</h1>
 
   <div class="lists">
-    <div class="row">
-      <h4 class="primary">B1T1 Coffee</h4>
-      <h4 class="primary">
-        {{
-          (user$ | async)?.stock_coffee_b1t1 == undefined
-            ? 0
-            : (user$ | async)?.stock_coffee_b1t1
-        }}
-        box
-      </h4>
-    </div>
+    <ng-container *ngIf="!(user$ | async)?.is_admin">
+      <div class="row">
+        <h4 class="primary">PIN Coffee</h4>
+        <h4 class="primary">
+          {{
+            (user$ | async)?.pin_stock_coffee == undefined
+              ? 0
+              : (user$ | async)?.pin_stock_coffee
+          }}
+          box
+        </h4>
+      </div>
 
-    <div class="row">
-      <h4 class="primary">B2T3 Coffee</h4>
-      <h4 class="primary">
-        {{
-          (user$ | async)?.stock_coffee_b2t3 == undefined
-            ? 0
-            : (user$ | async)?.stock_coffee_b2t3
-        }}
-        box
-      </h4>
-    </div>
+      <div class="row">
+        <h4 class="primary">PIN Soap</h4>
+        <h4 class="primary">
+          {{
+            (user$ | async)?.pin_stock_soap == undefined
+              ? 0
+              : (user$ | async)?.pin_stock_soap
+          }}
+          box
+        </h4>
+      </div>
 
-    <div class="row">
-      <h4 class="primary">B1T1 Soap</h4>
-      <h4 class="primary">
-        {{
-          (user$ | async)?.stock_soap_b1t1 == undefined
-            ? 0
-            : (user$ | async)?.stock_soap_b1t1
-        }}
-        box
-      </h4>
-    </div>
+      <div class="row">
+        <h4 class="primary">B1T1 Coffee</h4>
+        <h4 class="primary">
+          {{
+            (user$ | async)?.stock_coffee_b1t1 == undefined
+              ? 0
+              : (user$ | async)?.stock_coffee_b1t1
+          }}
+          box
+        </h4>
+      </div>
 
-    <div class="row">
-      <h4 class="primary">B2T3 Soap</h4>
-      <h4 class="primary">
-        {{
-          (user$ | async)?.stock_soap_b2t3 == undefined
-            ? 0
-            : (user$ | async)?.stock_soap_b2t3
-        }}
-        box
-      </h4>
-    </div>
+      <div class="row">
+        <h4 class="primary">B2T3 Coffee</h4>
+        <h4 class="primary">
+          {{
+            (user$ | async)?.stock_coffee_b2t3 == undefined
+              ? 0
+              : (user$ | async)?.stock_coffee_b2t3
+          }}
+          box
+        </h4>
+      </div>
 
-    <mat-divider></mat-divider>
+      <div class="row">
+        <h4 class="primary">B1T1 Soap</h4>
+        <h4 class="primary">
+          {{
+            (user$ | async)?.stock_soap_b1t1 == undefined
+              ? 0
+              : (user$ | async)?.stock_soap_b1t1
+          }}
+          box
+        </h4>
+      </div>
+
+      <div class="row">
+        <h4 class="primary">B2T3 Soap</h4>
+        <h4 class="primary">
+          {{
+            (user$ | async)?.stock_soap_b2t3 == undefined
+              ? 0
+              : (user$ | async)?.stock_soap_b2t3
+          }}
+          box
+        </h4>
+      </div>
+
+      <mat-divider></mat-divider>
+    </ng-container>
 
     <div class="row">
       <h4 class="primary">Total Coffee</h4>
@@ -87,29 +113,12 @@
         <div class="amount">
           <div>
             <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label>Pure Angel Coffee B1T1</mat-label>
-              <input
-                matInput
-                type="number"
-                formControlName="stock_coffee_b1t1"
-              />
+              <mat-label>Restock Coffee</mat-label>
+              <input matInput type="number" formControlName="restock_coffee" />
             </mat-form-field>
             <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label>Pure Angel Soap B1T1</mat-label>
-              <input matInput type="number" formControlName="stock_soap_b1t1" />
-            </mat-form-field>
-
-            <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label>Pure Angel Coffee B2T3</mat-label>
-              <input
-                matInput
-                type="number"
-                formControlName="stock_coffee_b2t3"
-              />
-            </mat-form-field>
-            <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label>Pure Angel Soap B2T3</mat-label>
-              <input matInput type="number" formControlName="stock_soap_b2t3" />
+              <mat-label>Restock Soap</mat-label>
+              <input matInput type="number" formControlName="restock_soap" />
             </mat-form-field>
           </div>
         </div>

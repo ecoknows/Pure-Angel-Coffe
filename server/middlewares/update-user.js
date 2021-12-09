@@ -40,9 +40,13 @@ async function UpdateFreeAccounts(updated_user, update_info) {
     const ending_number =
       updated_user.user_number + updated_user.free_account_leader;
 
+    const area_code = updated_user.is_stockist
+      ? updated_user.stockist_area_code
+      : updated_user.secret_code_suffi;
+
     for (let i = user_number; i < ending_number; i++) {
       const user_to_verify = await User.findOne({
-        account_number: updated_user.secret_code_suffix + "0" + i.toString(),
+        account_number: area_code + "0" + i.toString(),
       });
 
       updateUserAuthentication(update_info, user_to_verify);

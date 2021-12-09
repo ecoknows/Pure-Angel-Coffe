@@ -24,10 +24,8 @@ export class StockInventoryComponent implements OnInit {
   ) {
     this.user$ = this.store.select('userReducer');
     this.form = this.fb.group({
-      stock_coffee_b1t1: [undefined],
-      stock_soap_b1t1: [undefined],
-      stock_coffee_b2t3: [undefined],
-      stock_soap_b2t3: [undefined],
+      restock_coffee: [undefined],
+      restock_soap: [undefined],
     });
   }
 
@@ -36,15 +34,11 @@ export class StockInventoryComponent implements OnInit {
   }
 
   restock() {
-    const stock_coffee_b1t1 = this.form.get('stock_coffee_b1t1')?.value;
-    const stock_soap_b1t1 = this.form.get('stock_soap_b1t1')?.value;
-    const stock_coffee_b2t3 = this.form.get('stock_coffee_b2t3')?.value;
-    const stock_soap_b2t3 = this.form.get('stock_soap_b2t3')?.value;
+    const restock_coffee = this.form.get('restock_coffee')?.value;
+    const restock_soap = this.form.get('restock_soap')?.value;
     this.stockInventoryService.restock({
-      stock_coffee_b1t1,
-      stock_soap_b1t1,
-      stock_coffee_b2t3,
-      stock_soap_b2t3,
+      restock_coffee,
+      restock_soap,
     });
   }
 }

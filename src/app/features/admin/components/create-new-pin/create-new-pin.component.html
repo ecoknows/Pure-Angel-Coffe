@@ -128,7 +128,7 @@
         </li>
         <li>
           New PINS :
-          <span *ngIf="(searchAccount$ | async)?.ending_pin != undefined"
+          <span
             >{{ (searchAccount$ | async)?.secret_code_suffix || 0 }}0{{
               startingPin(searchAccount$ | async)
             }}

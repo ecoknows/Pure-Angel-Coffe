@@ -22,7 +22,10 @@ CreateNewPinRouter.post(
       account_number: req.body.account_number,
     });
 
-    if (searched_account && searched_account.is_mega_center) {
+    if (
+      (searched_account && searched_account.is_mega_center) ||
+      searched_account.is_stockist
+    ) {
       const user_verification = await UserVerification.findOne({
         user_id: searched_account._id,
       });

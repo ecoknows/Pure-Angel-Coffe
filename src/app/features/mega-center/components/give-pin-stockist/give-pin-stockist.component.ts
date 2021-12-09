@@ -110,6 +110,7 @@ export class GivePinStockistComponent implements OnInit {
     }
     return undefined;
   }
+
   endingPin(user: UserState | null, mega_center: UserState | null) {
     const addedPin = this.secondFormGroup.get('addedPin')?.value;
 
@@ -126,17 +127,18 @@ export class GivePinStockistComponent implements OnInit {
         return user.ending_pin + addedPin;
       }
 
-      if (
-        user.ending_pin == undefined &&
-        user.number_of_pin == undefined &&
-        mega_center.ending_pin
-      ) {
-        return mega_center.ending_pin + addedPin;
+      if (user.ending_pin == undefined && user.number_of_pin == undefined) {
+        if (mega_center.ending_pin) {
+          return mega_center.ending_pin + addedPin;
+        } else {
+          return addedPin;
+        }
       }
     }
 
     return undefined;
   }
+
   totalPins(user: UserState | null) {
     const addedPin = this.secondFormGroup.get('addedPin')?.value;
     if (user && addedPin) {

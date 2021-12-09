@@ -100,6 +100,7 @@ export async function updateStock(req, res, next) {
       : soap_ordered;
 
     await buyer.save();
+    next();
   } else if (req.body.package == "b2t3") {
     buyer.stock_coffee_b2t3 = buyer.stock_coffee_b2t3
       ? buyer.stock_coffee_b2t3 + coffee_ordered
@@ -294,7 +295,7 @@ export async function purchaseIncome(req, res, next) {
   const body = req.body;
 
   if (body.package == "b1t1") {
-    if (user.is_mega_center) {
+    if (user.is_mega_center && !buyer_user.is_stockist) {
       const coffee_total_income =
         COFFEE_B1T1_MEGA_CENTER_INCOME * body.coffee_package;
 
@@ -428,7 +429,7 @@ export async function purchaseIncome(req, res, next) {
       await seller.save();
     }
   } else if (body.package == "b2t3") {
-    if (user.is_mega_center) {
+    if (user.is_mega_center && !buyer_user.is_stockist) {
       const coffee_total_income =
         COFFEE_B2T3_MEGA_CENTER_INCOME * body.coffee_package;
       const soap_total_income =
