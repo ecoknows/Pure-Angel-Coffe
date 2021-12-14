@@ -12,10 +12,7 @@ UserCashouts.get(
   expressAsyncHandler(async (req, res) => {
     const user = req.user;
 
-    const cashouts = await Cashout.aggregate([
-      { $match: { user_id: user._id } },
-      { $sort: { createdAt: -1 } },
-    ]);
+    const cashouts = await Cashout.aggregate([{ $sort: { createdAt: -1 } }]);
 
     if (cashouts) {
       res.send({
@@ -42,24 +39,27 @@ UserCashouts.post(
     });
 
     if (userVerification) {
-      if (userVerification.unpaid_income >= body.cashout) {
+      if (userVerification.unpaid_income >= body.amount) {
         const newCashout = new Cashout({
           user_id: user._id,
+          account_number: user.account_number,
 
           first_name: user.first_name,
           last_name: user.last_name,
           address: user.address,
           contact_number: user.contact_number,
 
-          cashout: body.cashout,
+          amount: body.amount,
+          mode_of_withdrawal: body.mode_of_withdrawal,
         });
 
         const createCashout = await newCashout.save();
 
         userVerification.unpaid_income =
-          userVerification.unpaid_income - createCashout.cashout;
+          userVerification.unpaid_income - createCashout.amount;
 
         await userVerification.save();
+
         res.send({
           message: "Successfully Cashout money!",
         });

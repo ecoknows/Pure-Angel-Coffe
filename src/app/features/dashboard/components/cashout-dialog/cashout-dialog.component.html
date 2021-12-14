@@ -1,28 +1,45 @@
-<h1 mat-dialog-title>
-  Total Unpaid Income: ₱ {{ (user$ | async)?.unpaid_income }}
-</h1>
-<form [formGroup]="form" (ngSubmit)="cashout()">
-  <div mat-dialog-content>
-    <mat-form-field class="amount">
-      <mat-label>Enter the amount you want to cashout</mat-label>
-      <input
-        matInput
-        placeholder="Ex. 700"
-        type="number"
-        formControlName="amount"
-        [errorStateMatcher]="matcher"
-      />
+<section>
+  <h1 mat-dialog-title>
+    Unclaimed Income : ₱ {{ (user$ | async)?.unpaid_income | number: "1.2-2" }}
+  </h1>
+  <form [formGroup]="form" (ngSubmit)="cashout()">
+    <div mat-dialog-content>
+      <mat-form-field class="amount">
+        <mat-label>Enter the amount you want to cashout</mat-label>
+        <input
+          matInput
+          placeholder="Ex. 700"
+          type="number"
+          formControlName="amount"
+          [errorStateMatcher]="matcher"
+        />
 
-      <mat-error *ngIf="form.get('amount')?.hasError('amountExceed')">
-        You can only cashout minimum of ₱ 100 maximum of ₱
-        {{ (user$ | async)?.unpaid_income }}
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <div mat-dialog-actions>
-    <button mat-button mat-dialog-close>No</button>
-    <button mat-button mat-dialog-close type="submit" [disabled]="form.invalid">
-      Cashout
-    </button>
-  </div>
-</form>
+        <mat-error *ngIf="form.get('amount')?.hasError('amountExceed')">
+          ₱ 100 to ₱
+          {{ (user$ | async)?.unpaid_income | number: "1.2-2" }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-radio-group
+        aria-label="Select an option"
+        class="mode_of_withdrawl"
+        formControlName="mode_of_withdrawal"
+      >
+        <mat-radio-button value="gcash">G-Cash</mat-radio-button>
+        <mat-radio-button value="atm">ATM</mat-radio-button>
+        <mat-radio-button value="cash_on_hand">Cash on Hand</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>No</button>
+      <button
+        mat-button
+        mat-dialog-close
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Cashout
+      </button>
+    </div>
+  </form>
+</section>

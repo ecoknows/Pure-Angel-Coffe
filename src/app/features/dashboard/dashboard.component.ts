@@ -6,6 +6,11 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { CashoutDialogComponent } from './components/cashout-dialog/cashout-dialog.component';
+import {
+  faHandHoldingUsd,
+  faClipboardList,
+} from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -13,6 +18,9 @@ import { CashoutDialogComponent } from './components/cashout-dialog/cashout-dial
 })
 export class DashboardComponent implements OnInit {
   user$: Observable<UserState>;
+
+  faHandHoldingUsd = faHandHoldingUsd;
+  faClipboardList = faClipboardList;
 
   constructor(
     private authService: AuthService,

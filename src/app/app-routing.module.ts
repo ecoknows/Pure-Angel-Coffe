@@ -25,6 +25,7 @@ import {
   GenealogyComponent,
   SettingComponent,
   IncomeHistoryComponent,
+  CashoutsComponent,
 } from './features';
 
 const routes: Routes = [
@@ -38,6 +39,16 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
+    path: 'dashboard/cashouts',
+    component: CashoutsComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'dashboard/incomes',
+    component: IncomeHistoryComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
     path: 'login',
     component: LoginComponent,
     canActivate: [LoginGuardService],
@@ -45,11 +56,6 @@ const routes: Routes = [
   {
     path: 'genealogy',
     component: GenealogyComponent,
-    canActivate: [AuthGuardService],
-  },
-  {
-    path: 'incomes',
-    component: IncomeHistoryComponent,
     canActivate: [AuthGuardService],
   },
   {

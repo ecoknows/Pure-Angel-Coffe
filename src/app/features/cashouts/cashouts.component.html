@@ -1,0 +1,38 @@
+<div class="cashouts-list">
+  <div class="legend">
+    <h1>Cashouts List</h1>
+  </div>
+
+  <ngx-datatable
+    class="material fullscreen"
+    [columnMode]="ColumnMode.force"
+    style="top: 10px"
+    [headerHeight]="50"
+    [footerHeight]="0"
+    [rowHeight]="'auto'"
+    [scrollbarH]="true"
+    [rows]="dataSource$ | async"
+  >
+    <ngx-datatable-column name="Details">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <mat-checkbox class="example-margin" [checked]="row.is_cliamed">
+          <span class="primary">{{ row.account_number }}</span>
+        </mat-checkbox>
+
+        <div>{{ row.first_name }} {{ row.last_name }}</div>
+        <div>
+          <strong>
+            {{ row.createdAt | date: "short" }}
+          </strong>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Amount">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div class="primary">₱ {{ row.amount | number: "1.2-2" }}</div>
+        <div>VIA {{ modeOfWithdrawal(row.mode_of_withdrawal) }}</div>
+      </ng-template>
+    </ngx-datatable-column>
+  </ngx-datatable>
+</div>

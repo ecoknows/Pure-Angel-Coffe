@@ -53,6 +53,8 @@ import { PinHistoryComponent } from './admin/components/create-new-pin/component
 import { HomeComponent } from './home/home.component';
 import { HomeTopBarComponent } from './home/components/home-top-bar/home-top-bar.component';
 import { HomeSideBarComponent } from './home/components/home-side-bar/home-side-bar.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { CashoutsComponent } from './cashouts/cashouts.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,7 @@ import { HomeSideBarComponent } from './home/components/home-side-bar/home-side-
     HomeComponent,
     HomeTopBarComponent,
     HomeSideBarComponent,
+    CashoutsComponent,
   ],
   imports: [
     NgxChartsModule,
@@ -110,6 +113,7 @@ import { HomeSideBarComponent } from './home/components/home-side-bar/home-side-
     MatRippleModule,
     MatButtonToggleModule,
     MatTableModule,
+    MatRadioModule,
   ],
   exports: [HomeTopBarComponent, HomeSideBarComponent],
 })

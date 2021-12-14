@@ -13,7 +13,7 @@ export class LimitValidators {
     return (control: AbstractControl): Observable<ValidationErrors> => {
       return user$.pipe(
         map((result: any) => {
-          if (result.unpaid_income < control.value || control.value <= 100) {
+          if (result.unpaid_income < control.value || control.value < 100) {
             control.setErrors({ amountExceed: true });
           }
           return { amountExceed: true };

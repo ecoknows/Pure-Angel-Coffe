@@ -4,6 +4,7 @@ import { GenealogyComponent } from './genealogy/genealogy.component';
 import { LoginComponent } from './login/login.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { IncomeHistoryComponent } from './income-history/income-history.component';
+import { CashoutsComponent } from './cashouts/cashouts.component';
 
 export const components: any[] = [
   HomeComponent,
@@ -12,6 +13,7 @@ export const components: any[] = [
   NotificationsComponent,
   GenealogyComponent,
   IncomeHistoryComponent,
+  CashoutsComponent,
 ];
 
 export * from './home/home.component';
@@ -21,3 +23,4 @@ export * from './notifications/notifications.component';
 export * from './genealogy/genealogy.component';
 export * from './setting/setting.component';
 export * from './income-history/income-history.component';
+export * from './cashouts/cashouts.component';

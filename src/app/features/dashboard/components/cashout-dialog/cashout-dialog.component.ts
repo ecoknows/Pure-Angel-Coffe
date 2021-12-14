@@ -27,11 +27,13 @@ export class CashoutDialogComponent {
     this.user$ = this.store.select('userReducer');
     this.form = fb.group({
       amount: [0, null, LimitValidators.limitMoney(this.user$)],
+      mode_of_withdrawal: ['cash_on_hand'],
     });
   }
 
   cashout() {
     const amount = this.form.get('amount')?.value;
-    this.userCashoutsService.cashout(amount);
+    const mode_of_withdrawal = this.form.get('mode_of_withdrawal')?.value;
+    this.userCashoutsService.cashout(amount, mode_of_withdrawal);
   }
 }

@@ -11,6 +11,7 @@ import {
 } from './search-account/search-account.reducers';
 import { incomeHistoryReducer } from './income-history/income-history.reducer';
 import { pinHistoryReducer } from './pin-history/pin-history.reducer';
+import { cashoutsReducer } from './cashouts/cashouts.reducer';
 
 const reducer: object = {
   genealogyReducer: genealogyReducer,
@@ -22,6 +23,7 @@ const reducer: object = {
   searchGenealogyReducer: searchGenealogyReducer,
   incomeHistoryReducer: incomeHistoryReducer,
   pinHistoryReducer: pinHistoryReducer,
+  cashoutsReducer: cashoutsReducer,
 };
 
 @NgModule({
