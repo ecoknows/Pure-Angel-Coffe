@@ -60,6 +60,7 @@ export class UpgradeAccountService {
       account_id: string;
       status: string;
       assign_area: string | undefined;
+      mega_center_account_number: string | undefined;
     },
     stepper: any
   ) {

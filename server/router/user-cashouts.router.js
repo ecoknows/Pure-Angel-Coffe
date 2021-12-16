@@ -1,8 +1,10 @@
+import { WITHDRAWAL_CHARGE } from "../constants.js";
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Cashout from "../models/cashout.model.js";
 import UserVerification from "../models/user.verification.model.js";
-import { verifyUserToken } from "../utils.js";
+import { verifyUserToken, checkIfAdmin } from "../utils.js";
+import Admin from "../models/admin.model.js";
 
 const UserCashouts = express.Router();
 
@@ -22,6 +24,36 @@ UserCashouts.get(
     } else {
       res.status(401).send({
         message: "You don't have cashouts yet....",
+      });
+    }
+  })
+);
+
+UserCashouts.post(
+  "/approve-cashout",
+  verifyUserToken,
+  checkIfAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const old_cashout = req.body.cashout;
+
+    const cashout = await Cashout.findById(old_cashout._id);
+
+    if (cashout) {
+      cashout.is_claimed = !old_cashout.is_claimed;
+
+      const updated_cashout = await cashout.save();
+      if (updated_cashout.is_claimed) {
+        res.send({
+          message: "Succesffully Approve Cashout!",
+        });
+      } else {
+        res.send({
+          message: "Succesffully Reapprove Cashout!",
+        });
+      }
+    } else {
+      res.status(401).send({
+        message: "Failed to Approve Cashout",
       });
     }
   })
@@ -50,15 +82,25 @@ UserCashouts.post(
           contact_number: user.contact_number,
 
           amount: body.amount,
+          withdrawal_charge: WITHDRAWAL_CHARGE,
           mode_of_withdrawal: body.mode_of_withdrawal,
         });
 
         const createCashout = await newCashout.save();
 
+        const adminStorage = await Admin.findOne({
+          account_number: "EDTESS",
+        });
+
+        adminStorage.withdrawal_charge_income =
+          adminStorage.withdrawal_charge_income + WITHDRAWAL_CHARGE;
+
         userVerification.unpaid_income =
-          userVerification.unpaid_income - createCashout.amount;
+          userVerification.unpaid_income -
+          (createCashout.amount + WITHDRAWAL_CHARGE);
 
         await userVerification.save();
+        await adminStorage.save();
 
         res.send({
           message: "Successfully Cashout money!",

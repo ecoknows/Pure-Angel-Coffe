@@ -11,6 +11,7 @@ const cashoutSchema = new mongoose.Schema(
     contact_number: { type: String, required: true },
 
     amount: { type: Number, required: true },
+    withdrawal_charge: { type: Number },
     is_claimed: { type: Boolean, default: false },
     mode_of_withdrawal: { type: String },
   },

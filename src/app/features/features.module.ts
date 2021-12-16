@@ -55,6 +55,7 @@ import { HomeTopBarComponent } from './home/components/home-top-bar/home-top-bar
 import { HomeSideBarComponent } from './home/components/home-side-bar/home-side-bar.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { CashoutsComponent } from './cashouts/cashouts.component';
+import { ReceiptDialogComponent } from './dashboard/components/receipt-dialog/receipt-dialog.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { CashoutsComponent } from './cashouts/cashouts.component';
     HomeTopBarComponent,
     HomeSideBarComponent,
     CashoutsComponent,
+    ReceiptDialogComponent,
   ],
   imports: [
     NgxChartsModule,

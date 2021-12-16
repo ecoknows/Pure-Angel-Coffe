@@ -13,7 +13,6 @@ export interface UserState {
   max_member_to_verify?: number;
   member_that_verified?: number;
   secret_code_suffix?: string;
-  stockist_area_code?: string;
 
   ending_pin?: number;
   number_of_pin?: number;
@@ -65,6 +64,10 @@ export interface UserState {
   is_owner?: boolean;
   is_stockist?: boolean;
   is_mega_center?: boolean;
+
+  // ADMIN STORAGE
+
+  withdrawal_charge_income?: number;
 }
 
 export const USER_INITIAL_STATE: UserState = {};

@@ -8,6 +8,7 @@ import {
   initializeUpdateUser,
   updateUserAndFreeAccounts,
 } from "../middlewares/update-user.js";
+import Admin from "../models/admin.model.js";
 
 const UserRouter = express.Router();
 
@@ -51,9 +52,21 @@ UserRouter.get(
         user_id: user._id,
       });
 
+      let admin_storage;
+
+      if (user.is_admin) {
+        const admin = await Admin.findOne({
+          account_number: "EDTESS",
+        });
+
+        admin_storage = {
+          withdrawal_charge_income: admin.withdrawal_charge_income,
+        };
+      }
+
       res.send({
         message: "Successfully fetch User",
-        data: { user, user_verification },
+        data: { user, user_verification, admin_storage },
       });
     } else {
       res.send({

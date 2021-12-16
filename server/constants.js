@@ -30,7 +30,7 @@ export const SOAP_B2T3_STOCKIST_INCOME = 27.5; // 42.50 PER BOX SOAP
 export const SOAP_B2T3_AE_REBATES = 12.5;
 
 export const COFFEE_PACKAGE_PER_PIN = 3;
-export const SOAP_PACKAGE_PER_PIN = 3;
+export const SOAP_PACKAGE_PER_PIN = 6;
 
 export const ADMIN_PURCHASE_INCOME = 5;
 
@@ -57,3 +57,5 @@ export const TEXT_MESSAGE_API_KEY = "06E673A1-0B53-0D3B-5038-B4A4B8E2EE69";
 export const WELCOME_TEXT_MESSAGE =
   "\n Kamusta kayo? Ang ating website ay dumadaan sa proseso ng pag papaganda!" +
   " kayat manatiling updated para sa mga kaabang abang na mga anunsyo!";
+
+export const WITHDRAWAL_CHARGE = 50;

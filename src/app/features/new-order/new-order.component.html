@@ -1,32 +1,18 @@
 <div class="new-order">
   <div class="legend">
     <strong>AVAILABLE COFFEE :</strong>
-    <span *ngIf="(user$ | async)?.stock_coffee">
-      {{ (user$ | async)?.stock_coffee }} BOXES
+    <span>
+      {{ (user$ | async)?.stock_coffee_b1t1 || 0 }} B1T1,
+      {{ (user$ | async)?.stock_coffee_b2t3 || 0 }} B2T3
     </span>
-    <span
-      *ngIf="
-        (user$ | async)?.stock_coffee == undefined ||
-        (user$ | async)?.stock_coffee == 0
-      "
-    >
-      Out of Stock</span
-    >
   </div>
 
   <div class="legend">
     <strong>AVAILABLE SOAP :</strong>
-    <span *ngIf="(user$ | async)?.stock_coffee">
-      {{ (user$ | async)?.stock_soap }} BOXES
+    <span>
+      {{ (user$ | async)?.stock_soap_b1t1 || 0 }} B1T1,
+      {{ (user$ | async)?.stock_soap_b2t3 || 0 }} B2T3
     </span>
-    <span
-      *ngIf="
-        (user$ | async)?.stock_coffee == undefined ||
-        (user$ | async)?.stock_coffee == 0
-      "
-    >
-      Out of Stock</span
-    >
   </div>
 
   <mat-stepper

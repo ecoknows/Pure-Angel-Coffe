@@ -114,7 +114,11 @@ export class AuthService {
     this.http
       .get<{
         message: string;
-        data: { user: UserState; user_verification: UserState };
+        data: {
+          user: UserState;
+          user_verification: UserState;
+          admin_storage: UserState;
+        };
       }>(environment.api + 'api/user/user-details', {
         headers: this.headers,
       })
@@ -123,6 +127,7 @@ export class AuthService {
         if (data) {
           this.store.dispatch(setUserData({ user: data.user }));
           this.store.dispatch(setUserData({ user: data.user_verification }));
+          this.store.dispatch(setUserData({ user: data.admin_storage }));
         }
       });
   }

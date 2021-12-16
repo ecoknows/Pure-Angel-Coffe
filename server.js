@@ -22,6 +22,7 @@ import UpgradeAccountRouter from "./server/router/upgrade-account.router.js";
 import IncomeHistoryRouter from "./server/router/income-history.router.js";
 import GivePinToStockistRouter from "./server/router/give-pin-to-stockist.router.js";
 import PinHistoryRouter from "./server/router/pin-history.router.js";
+import FixerRouter from "./server/router/fixer.router.js";
 
 const __dirname = path.resolve();
 
@@ -61,6 +62,7 @@ app.use("/api/new-order", NewOrderRouter);
 app.use("/api/stock-inventory", StockInventoryRouter);
 
 app.use("/api/seed", SeedRouter);
+app.use("/api/fixer", FixerRouter);
 
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname + "/dist/pure-angel-coffee/index.html"));

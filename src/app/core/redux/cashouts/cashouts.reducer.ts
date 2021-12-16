@@ -11,6 +11,7 @@ export interface CashoutsState {
   contact_number?: string;
 
   amount?: number;
+  withdrawal_charge?: number;
   is_claimed?: boolean;
   mode_of_withdrawal?: string;
 

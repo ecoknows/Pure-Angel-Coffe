@@ -48,7 +48,7 @@ export class GivePinStockistComponent implements OnInit {
 
   pinRange(user: null | UserState) {
     if (user) {
-      if (user?.ending_pin && user?.number_of_pin) {
+      if (user.ending_pin != undefined && user?.number_of_pin) {
         if (user.number_of_pin > 0) {
           const starting = (user.ending_pin + 1).toString();
           const ending = (user.ending_pin + user.number_of_pin).toString();
@@ -127,13 +127,7 @@ export class GivePinStockistComponent implements OnInit {
         return user.ending_pin + addedPin;
       }
 
-      if (user.ending_pin == undefined && user.number_of_pin == undefined) {
-        if (mega_center.ending_pin) {
-          return mega_center.ending_pin + addedPin;
-        } else {
-          return addedPin;
-        }
-      }
+      return mega_center.ending_pin + addedPin;
     }
 
     return undefined;

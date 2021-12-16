@@ -1,7 +1,55 @@
 <section>
-  <h1 mat-dialog-title>
-    Unclaimed Income : ₱ {{ (user$ | async)?.unpaid_income | number: "1.2-2" }}
-  </h1>
+  <div class="receipt">
+    <h1 class="title">
+      ₱ {{ (user$ | async)?.unpaid_income | number: "1.2-2" || 0 }}
+    </h1>
+    <div class="row">
+      <div class="name">
+        <h5>Cashout</h5>
+      </div>
+
+      <div class="total">
+        <ng-container *ngIf="form.get('amount')?.value">
+          <h5>₱ {{ form.get("amount")?.value | number: "1.2-2" }}</h5>
+        </ng-container>
+        <ng-container *ngIf="!form.get('amount')?.value">
+          <h5>₱ 0</h5>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="name">
+        <h5>Charge</h5>
+      </div>
+
+      <div class="total">
+        <h5>₱ {{ withdrawalCharge | number: "1.2-2" }}</h5>
+      </div>
+    </div>
+
+    <mat-divider style="margin-bottom: 6px"></mat-divider>
+
+    <div class="row">
+      <div class="name">
+        <h5>TOTAL</h5>
+      </div>
+
+      <div class="total">
+        <ng-container *ngIf="form.get('amount')?.value">
+          <h5>
+            ₱
+            {{ form.get("amount")?.value + withdrawalCharge | number: "1.2-2" }}
+          </h5>
+        </ng-container>
+
+        <ng-container *ngIf="!form.get('amount')?.value">
+          <h5>₱ 0</h5>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
   <form [formGroup]="form" (ngSubmit)="cashout()">
     <div mat-dialog-content>
       <mat-form-field class="amount">
@@ -16,7 +64,7 @@
 
         <mat-error *ngIf="form.get('amount')?.hasError('amountExceed')">
           ₱ 100 to ₱
-          {{ (user$ | async)?.unpaid_income | number: "1.2-2" }}
+          {{ getLimitWithdrawal(user$ | async) | number: "1.2-2" }}
         </mat-error>
       </mat-form-field>
 
@@ -27,7 +75,8 @@
       >
         <mat-radio-button value="gcash">G-Cash</mat-radio-button>
         <mat-radio-button value="atm">ATM</mat-radio-button>
-        <mat-radio-button value="cash_on_hand">Cash on Hand</mat-radio-button>
+        <mat-radio-button value="check">Check</mat-radio-button>
+        <mat-radio-button value="cash">Cash</mat-radio-button>
       </mat-radio-group>
     </div>
     <div mat-dialog-actions>

@@ -33,6 +33,10 @@ export class CashoutsComponent implements OnInit {
     this.userCashoutsService.fetchCashouts();
   }
 
+  approvedCashout(cashout: CashoutsState) {
+    this.userCashoutsService.approveCashout(cashout);
+  }
+
   modeOfWithdrawal(mode: string) {
     if (mode == 'gcash') {
       return 'G-Cash';
@@ -43,8 +47,10 @@ export class CashoutsComponent implements OnInit {
         return 'G-Cash';
       case 'atm':
         return 'ATM';
-      case 'cash_on_hand':
-        return 'Cash On Hand';
+      case 'check':
+        return 'Check';
+      case 'cash':
+        return 'Cash';
     }
 
     return '';

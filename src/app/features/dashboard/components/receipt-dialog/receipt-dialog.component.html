@@ -1,0 +1,64 @@
+<section>
+  <h3>**************************</h3>
+  <h1 class="title">Withdrawal Receipt</h1>
+  <h3>**************************</h3>
+  <div class="date">
+    <div class="name">
+      <h5>Date</h5>
+    </div>
+    <div class="total">
+      <h5>{{ data.date | date: "short" }}</h5>
+    </div>
+  </div>
+  <h6>*********************************************</h6>
+
+  <div class="info">
+    <div class="name">
+      <h5>Amount</h5>
+    </div>
+    <div class="total">
+      <h5>₱ {{ data.amount | number: "1.2-2" }}</h5>
+    </div>
+  </div>
+
+  <div class="info">
+    <div class="name">
+      <h5>Charge</h5>
+    </div>
+    <div class="total">
+      <h5>₱ {{ withdrawalCharge }}</h5>
+    </div>
+  </div>
+
+  <div class="info">
+    <div class="name">
+      <h5>Via</h5>
+    </div>
+    <div class="total">
+      <h5>{{ modeOfWithdrawal }}</h5>
+    </div>
+  </div>
+
+  <h6>*********************************************</h6>
+
+  <div class="total">
+    <div class="name">
+      <h5><strong>TOTAL AMOUNT</strong></h5>
+    </div>
+    <div class="total">
+      <ng-container *ngIf="data.amount">
+        <h5>₱ {{ data.amount + withdrawalCharge | number: "1.2-2" }}</h5>
+      </ng-container>
+      <ng-container *ngIf="!data.amount">
+        <h5>₱ 0</h5>
+      </ng-container>
+    </div>
+  </div>
+
+  <h6>*********************************************</h6>
+
+  <p>Kindly picture this receipt for the copy of the transaction...</p>
+
+  <h3 class="ty">******THANK YOU!******</h3>
+  <button mat-button mat-dialog-close>Close</button>
+</section>

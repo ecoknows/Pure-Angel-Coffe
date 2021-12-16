@@ -15,8 +15,6 @@ const userSchema = new mongoose.Schema(
 
     secret_code_suffix: { type: String, required: true },
 
-    stockist_area_code: { type: String },
-
     ending_pin: { type: Number },
     number_of_pin: { type: Number },
 

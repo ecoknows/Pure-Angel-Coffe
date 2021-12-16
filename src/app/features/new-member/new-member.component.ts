@@ -132,22 +132,10 @@ export class NewMemberComponent implements OnInit {
 
   pinRange(user: null | UserState) {
     if (user) {
-      if (user?.ending_pin && user?.number_of_pin) {
+      if (user.ending_pin != undefined && user?.number_of_pin) {
         if (user.number_of_pin > 0) {
           const starting = (user.ending_pin + 1).toString();
           const ending = (user.ending_pin + user.number_of_pin).toString();
-
-          if (user.is_stockist) {
-            return (
-              user.stockist_area_code +
-              '0' +
-              starting +
-              ' to ' +
-              user.stockist_area_code +
-              '0' +
-              ending
-            );
-          }
 
           return (
             user.secret_code_suffix +
@@ -172,7 +160,8 @@ export class NewMemberComponent implements OnInit {
       if (user?.ending_pin && user?.number_of_pin) {
         if (user.number_of_pin > 0) {
           const starting = (user.ending_pin + 1).toString();
-          return user.secret_code_suffix + '0' + starting;
+          const user_area_code = user.secret_code_suffix;
+          return user_area_code + '0' + starting;
         }
       }
     }

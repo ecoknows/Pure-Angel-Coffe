@@ -15,7 +15,11 @@
   >
     <ngx-datatable-column name="Details">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <mat-checkbox class="example-margin" [checked]="row.is_cliamed">
+        <mat-checkbox
+          class="example-margin"
+          [checked]="row.is_claimed"
+          (change)="approvedCashout(row)"
+        >
           <span class="primary">{{ row.account_number }}</span>
         </mat-checkbox>
 
@@ -31,7 +35,9 @@
     <ngx-datatable-column name="Amount">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <div class="primary">₱ {{ row.amount | number: "1.2-2" }}</div>
-        <div>VIA {{ modeOfWithdrawal(row.mode_of_withdrawal) }}</div>
+        <div>
+          <strong>VIA {{ modeOfWithdrawal(row.mode_of_withdrawal) }} </strong>
+        </div>
       </ng-template>
     </ngx-datatable-column>
   </ngx-datatable>

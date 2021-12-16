@@ -64,6 +64,10 @@ export async function updatePin(req, res, next) {
     ? searched_account.number_of_pin + number_of_pin
     : number_of_pin;
 
+  if (searched_account.ending_pin == undefined) {
+    searched_account.ending_pin = 0;
+  }
+
   await searched_account.save();
 
   next();

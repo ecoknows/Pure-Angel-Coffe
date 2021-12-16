@@ -14,6 +14,7 @@ import {
 
 import { TextMe } from "../middlewares/text-message.js";
 import { WELCOME_TEXT_MESSAGE } from "../constants.js";
+import Admin from "../models/admin.model.js";
 
 let SeedRouter = express.Router();
 
@@ -630,6 +631,17 @@ SeedRouter.get(
     }
 
     res.send({ length: users.length, message: users });
+  })
+);
+
+SeedRouter.get(
+  "/create-admin",
+  expressAsyncHandler(async (req, res) => {
+    const admin = new Admin({
+      account_number: "EDTESS",
+    });
+    await admin.save();
+    res.send({ message: "Admin Created!" });
   })
 );
 

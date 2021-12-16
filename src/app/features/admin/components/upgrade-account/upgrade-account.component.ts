@@ -38,6 +38,7 @@ export class UpgradeAccountComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       status: ['', Validators.required],
       assign_area: [''],
+      mega_center_account_number: [''],
     });
 
     this.store.dispatch(resetSearchAccount());
@@ -46,6 +47,9 @@ export class UpgradeAccountComponent implements OnInit {
   upgrade(search_account: UserState, stepper: any) {
     const status = this.secondFormGroup.get('status')?.value;
     const assign_area = this.secondFormGroup.get('assign_area')?.value;
+    const mega_center_account_number = this.secondFormGroup.get(
+      'mega_center_account_number'
+    )?.value;
 
     if (search_account._id) {
       this.upgradeAccountService.upgrade(
@@ -53,6 +57,7 @@ export class UpgradeAccountComponent implements OnInit {
           account_id: search_account._id,
           status,
           assign_area,
+          mega_center_account_number,
         },
         stepper
       );

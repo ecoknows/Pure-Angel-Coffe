@@ -24,11 +24,27 @@ export async function upgradeToStockist(req, res, next) {
 
   if (body.status == "stockist") {
     searched_account.is_stockist = true;
-    searched_account.stockist_area_code = body.assign_area;
     searched_account.is_mega_center = undefined;
     await searched_account.save();
+
+    const mega_center = await User.findOne({
+      account_number: body.mega_center_account_number,
+    });
+
+    if (mega_center) {
+      searched_account.secret_code_suffix = mega_center.secret_code_suffix;
+
+      await searched_account.save();
+
+      next();
+    } else {
+      res.status(404).send({
+        message: "Invalid Mega Center Account Number",
+      });
+    }
+  } else {
+    next();
   }
-  next();
 }
 
 export async function upgradeToMegaCenter(req, res, next) {
@@ -120,5 +136,7 @@ export async function updateGenealogy(req, res, next) {
     }
   }
 
-  next();
+  res.send({
+    message: "Successfully Upgrade User!",
+  });
 }

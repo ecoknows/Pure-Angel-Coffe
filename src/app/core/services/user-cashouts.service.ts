@@ -7,6 +7,9 @@ import { AuthService } from './auth.service';
 import { SnackbarComponent } from '@shared/components';
 import { CashoutsState } from '@core/redux/cashouts/cashouts.reducer';
 import { setCashouts } from '@core/redux/cashouts/cashouts.actions';
+import { ReceiptDialogComponent } from '@features/dashboard/components/receipt-dialog/receipt-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +21,8 @@ export class UserCashoutsService {
     private http: HttpClient,
     private authService: AuthService,
     private store: Store<{}>,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
 
   fetchCashouts() {
@@ -32,17 +36,46 @@ export class UserCashoutsService {
           const data = response.data;
           if (data) {
             this.store.dispatch(setCashouts({ list: data }));
-
-            this._snackBar.openFromComponent(SnackbarComponent, {
-              duration: this.snackBarDuration * 1000,
-              verticalPosition: 'top',
-              horizontalPosition: 'center',
-              panelClass: ['snackbar-background'],
-              data: {
-                message: response.message,
-              },
-            });
           }
+        },
+        (error) => {
+          this._snackBar.openFromComponent(SnackbarComponent, {
+            duration: this.snackBarDuration * 1000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            panelClass: ['snackbar-background'],
+            data: {
+              message: error.error.message,
+              error: true,
+            },
+          });
+        }
+      );
+  }
+
+  approveCashout(cashout: CashoutsState) {
+    this.http
+      .post<{ message: string }>(
+        environment.api + 'api/user-cashouts/approve-cashout',
+        {
+          cashout,
+        },
+        {
+          headers: this.authService.headers,
+        }
+      )
+      .subscribe(
+        (response) => {
+          this.fetchCashouts();
+          this._snackBar.openFromComponent(SnackbarComponent, {
+            duration: this.snackBarDuration * 1000,
+            verticalPosition: 'top',
+            horizontalPosition: 'center',
+            panelClass: ['snackbar-background'],
+            data: {
+              message: response.message,
+            },
+          });
         },
         (error) => {
           this._snackBar.openFromComponent(SnackbarComponent, {
@@ -73,6 +106,13 @@ export class UserCashoutsService {
       )
       .subscribe(
         (response) => {
+          this.dialog.open(ReceiptDialogComponent, {
+            data: {
+              amount,
+              mode_of_withdrawal,
+              date: moment,
+            },
+          });
           this.authService.fetchUserDetails();
           this._snackBar.openFromComponent(SnackbarComponent, {
             duration: this.snackBarDuration * 1000,
