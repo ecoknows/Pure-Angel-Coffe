@@ -15,6 +15,7 @@ FixerRouter.get(
 
 async function VerifyAccount() {
   const users = await User.find({});
+  console.log("users : ", users.length);
   for (let i = 0; i < users.length; i++) {
     const user = users[i];
     const user_verification = await UserVerification.findOne({
@@ -22,7 +23,7 @@ async function VerifyAccount() {
     });
     user_verification.account_number = user.account_number;
 
-    user_verification.save();
+    await user_verification.save();
   }
 }
 export default FixerRouter;
