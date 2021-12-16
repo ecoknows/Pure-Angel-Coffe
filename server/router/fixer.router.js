@@ -8,22 +8,27 @@ const FixerRouter = express.Router();
 FixerRouter.get(
   "/verify/account-number",
   expressAsyncHandler(async (req, res) => {
-    VerifyAccount();
-    res.send({ message: "DONE!" });
+    const users_verification = await UserVerification.find({
+      account_number: { $exists: false },
+    });
+
+    for (let i = 0; i < users_verification.length; i++) {
+      const user = await User.findById(users_verification[i].user_id);
+
+      // console.log("Users: ", users.length);
+
+      const user_verification = await UserVerification.findById(
+        users_verification[i]._id
+      );
+
+      user_verification.account_number = user.account_number;
+
+      user_verification.save();
+    }
+
+    res.send({ message: users.length });
   })
 );
 
-async function VerifyAccount() {
-  const users = await User.find({});
-  console.log("users : ", users.length);
-  for (let i = 0; i < users.length; i++) {
-    const user = users[i];
-    const user_verification = await UserVerification.findOne({
-      user_id: user._id,
-    });
-    user_verification.account_number = user.account_number;
-
-    await user_verification.save();
-  }
-}
+async function VerifyAccount() {}
 export default FixerRouter;
