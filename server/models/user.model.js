@@ -20,14 +20,18 @@ const userSchema = new mongoose.Schema(
 
     free_account_leader: { type: Number },
 
+    area: { type: String },
+
     mega_center: {
       user_id: { type: String, index: true },
+      account_number: { type: String },
       first_name: { type: String },
       last_name: { type: String },
     },
 
     root_user_genealogy: {
       user_id: { type: String, index: true },
+      account_number: { type: String },
       first_name: { type: String },
       last_name: { type: String },
       address: { type: String },
@@ -36,6 +40,7 @@ const userSchema = new mongoose.Schema(
 
     user_that_invite: {
       user_id: { type: String, index: true },
+      account_number: { type: String },
       first_name: { type: String },
       last_name: { type: String },
       address: { type: String },

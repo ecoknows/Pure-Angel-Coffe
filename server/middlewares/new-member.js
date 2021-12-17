@@ -15,9 +15,7 @@ import {
   MEGA_CENTER_NEW_MEMBER_INCOME,
   STOCKIST_NEW_MEMBER_INCOME,
   PAIRING_BONUS_MAX_COUNT_PER_DAY,
-  PAIRING_BONUS_TYPE,
   PAIRING_PRODUCT_VOUCHER_PAYMENT,
-  PRODUCT_VOUCHER_TYPE,
 } from "../constants.js";
 import IndirectReferral from "../models/indirect-referral.model.js";
 import PairingBonus from "../models/pairing-bonus.model.js";
@@ -92,12 +90,16 @@ export async function createChildUser(req, res, next) {
     mega_center: referral_user?.is_mega_center
       ? {
           user_id: referral_user._id,
+          account_number: referral_user.account_number,
           first_name: referral_user.first_name,
           last_name: referral_user.last_name,
         }
       : referral_user?.mega_center
       ? {
           user_id: referral_user.mega_center.user_id,
+          account_number: referral_user.mega_center
+            ? referral_user.mega_center.account_number
+            : undefined,
           first_name: referral_user.mega_center.first_name,
           last_name: referral_user.mega_center.last_name,
         }
@@ -105,6 +107,7 @@ export async function createChildUser(req, res, next) {
 
     root_user_genealogy: {
       user_id: place_under_user._id,
+      account_number: place_under_user.account_number,
       first_name: place_under_user.first_name,
       last_name: place_under_user.last_name,
       address: place_under_user.address,
@@ -113,6 +116,7 @@ export async function createChildUser(req, res, next) {
 
     user_that_invite: {
       user_id: referral_user._id,
+      account_number: referral_user.account_number,
       first_name: referral_user.first_name,
       last_name: referral_user.last_name,
       address: referral_user.address,
@@ -131,20 +135,24 @@ export async function createChildVerification(req, res, next) {
   const position = req.body.position;
 
   let child_user_verification = new UserVerification({
-    account_number: child_user.account_number,
     user_id: child_user._id,
+    account_number: child_user.account_number,
     first_name: child_user.first_name,
     last_name: child_user.last_name,
 
     mega_center: referral_user?.is_mega_center
       ? {
           user_id: referral_user._id,
+          account_number: referral_user.account_number,
           first_name: referral_user.first_name,
           last_name: referral_user.last_name,
         }
       : referral_user?.mega_center
       ? {
           user_id: referral_user.mega_center.user_id,
+          account_number: referral_user.mega_center
+            ? referral_user.mega_center.account_number
+            : undefined,
           first_name: referral_user.mega_center.first_name,
           last_name: referral_user.mega_center.last_name,
         }
@@ -152,12 +160,14 @@ export async function createChildVerification(req, res, next) {
 
     user_that_invite: {
       user_id: referral_user._id,
+      account_number: referral_user.account_number,
       first_name: referral_user.first_name,
       last_name: referral_user.last_name,
       address: referral_user.address,
     },
     root_user_genealogy: {
       user_id: place_under_user._id,
+      account_number: place_under_user.account_number,
       first_name: place_under_user.first_name,
       last_name: place_under_user.last_name,
       address: place_under_user.address,

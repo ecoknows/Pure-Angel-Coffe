@@ -47,4 +47,46 @@ async function VerifyAccount() {
     user_verification.save();
   }
 }
+
+FixerRouter.post(
+  "/verify/mega-center",
+  expressAsyncHandler(async (req, res) => {
+    UpdateMegaCenter(req);
+
+    res.send({ message: "DONE!" });
+  })
+);
+
+async function UpdateMegaCenter(req) {
+  let body = req.body;
+  let i = 1;
+
+  const mega_center = await User.findOne({
+    account_number: body.mega_center,
+  });
+
+  while (true) {
+    const user = await UserVerification.updateOne(
+      { account_number: body.area_code + "0" + i.toString() },
+      {
+        mega_center: {
+          user_id: mega_center._id,
+          account_number: mega_center.account_number,
+          first_name: mega_center.first_name,
+          last_name: mega_center.last_name,
+        },
+        area_code: body.area_code,
+      }
+    );
+
+    if (user.modifiedCount == 0) {
+      break;
+    }
+
+    i++;
+  }
+  console.log(
+    "DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+  );
+}
 export default FixerRouter;

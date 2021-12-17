@@ -11,6 +11,7 @@ const userVerificationSchema = new mongoose.Schema(
     birthdate: { type: String },
 
     secret_code: { type: String },
+    area_code: { type: String },
 
     verified: { type: Boolean, default: true },
 
@@ -62,12 +63,21 @@ const userVerificationSchema = new mongoose.Schema(
 
     mega_center: {
       user_id: { type: String, index: true },
+      account_number: { type: String },
+      first_name: { type: String },
+      last_name: { type: String },
+    },
+
+    stockist: {
+      user_id: { type: String, index: true },
+      account_number: { type: String },
       first_name: { type: String },
       last_name: { type: String },
     },
 
     root_user_genealogy: {
       user_id: { type: String, index: true },
+      account_number: { type: String },
       first_name: { type: String },
       last_name: { type: String },
       address: { type: String },
@@ -76,6 +86,7 @@ const userVerificationSchema = new mongoose.Schema(
 
     user_that_invite: {
       user_id: { type: String, index: true },
+      account_number: { type: String },
       first_name: { type: String },
       last_name: { type: String },
       address: { type: String },
@@ -83,6 +94,7 @@ const userVerificationSchema = new mongoose.Schema(
 
     indirect_referral_user: {
       user_id: { type: String, index: true },
+      account_number: { type: String },
       first_name: { type: String },
       last_name: { type: String },
       address: { type: String },
