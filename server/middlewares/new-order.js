@@ -59,23 +59,18 @@ export async function initializeNewOrder(req, res, next) {
 export async function orderStock(req, res, next) {
   const body = req.body;
   const seller_user = req.seller_user;
-
-  if (seller_user.is_admin) {
+  if (body.package == "b1t1") {
     req.coffee_box = body.coffee_package * 2;
     req.soap_box = body.soap_package * 2;
 
     req.coffee_total_price = body.coffee_package * COFFEE_B1T1_SRP;
     req.soap_total_price = body.soap_package * SOAP_B1T1_SRP;
 
-    await updateSellerAdminStock(req, res, next);
-  } else if (body.package == "b1t1") {
-    req.coffee_box = body.coffee_package * 2;
-    req.soap_box = body.soap_package * 2;
-
-    req.coffee_total_price = body.coffee_package * COFFEE_B1T1_SRP;
-    req.soap_total_price = body.soap_package * SOAP_B1T1_SRP;
-
-    await updateSellerStockB1t1(req, res, next);
+    if (seller_user.is_admin) {
+      await updateSellerAdminStock(req, res, next);
+    } else {
+      await updateSellerStockB1t1(req, res, next);
+    }
   } else if (body.package == "b2t3") {
     req.coffee_box = body.coffee_package * 2 + body.coffee_package * 3;
     req.soap_box = body.soap_package * 2 + body.soap_package * 3;
@@ -83,7 +78,11 @@ export async function orderStock(req, res, next) {
     req.coffee_total_price = body.coffee_package * COFFEE_B2T3_SRP;
     req.soap_total_price = body.soap_package * SOAP_B2T3_SRP;
 
-    await updateSellerStockB2t3(req, res, next);
+    if (seller_user.is_admin) {
+      await updateSellerAdminStock(req, res, next);
+    } else {
+      await updateSellerStockB2t3(req, res, next);
+    }
   }
 }
 
