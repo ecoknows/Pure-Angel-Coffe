@@ -157,7 +157,7 @@ export class NewMemberComponent implements OnInit {
 
   getFirstPin(user: null | UserState) {
     if (user) {
-      if (user?.ending_pin && user?.number_of_pin) {
+      if (user?.ending_pin != undefined && user?.number_of_pin) {
         if (user.number_of_pin > 0) {
           const starting = (user.ending_pin + 1).toString();
           const user_area_code = user.secret_code_suffix;
