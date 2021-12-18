@@ -58,8 +58,17 @@ export async function initializeNewOrder(req, res, next) {
 
 export async function orderStock(req, res, next) {
   const body = req.body;
+  const seller_user = req.seller_user;
 
-  if (body.package == "b1t1") {
+  if (seller_user.is_admin) {
+    req.coffee_box = body.coffee_package * 2;
+    req.soap_box = body.soap_package * 2;
+
+    req.coffee_total_price = body.coffee_package * COFFEE_B1T1_SRP;
+    req.soap_total_price = body.soap_package * SOAP_B1T1_SRP;
+
+    await updateSellerAdminStock(req, res, next);
+  } else if (body.package == "b1t1") {
     req.coffee_box = body.coffee_package * 2;
     req.soap_box = body.soap_package * 2;
 
@@ -1135,6 +1144,48 @@ async function updateSellerStockB2t3(req, res, next) {
 
     if (seller.stock_soap_b2t3 != undefined && seller.stock_soap_b2t3 > 0) {
       seller.stock_soap_b2t3 = seller.stock_soap_b2t3 - soap_ordered;
+      seller.stock_soap = seller.stock_soap - soap_ordered;
+    }
+
+    await seller.save();
+    next();
+  } else {
+    if (can_stock_coffee == false && can_stock_soap == false) {
+      res.status(401).send({
+        message: "Your out of stock of coffee and soap",
+      });
+    } else if (can_stock_coffee == false) {
+      res.status(401).send({
+        message: "Your out of stock of coffee",
+      });
+    } else if (can_stock_soap == false) {
+      res.status(401).send({
+        message: "Your out of stock of soap",
+      });
+    }
+  }
+}
+
+async function updateSellerAdminStock(req, res, next) {
+  const seller = req.seller;
+  const coffee_ordered = req.coffee_box;
+  const soap_ordered = req.soap_box;
+
+  const can_stock_coffee =
+    seller.stock_coffee >= coffee_ordered || coffee_ordered == 0;
+
+  const can_stock_soap = seller.stock_soap >= soap_ordered || soap_ordered == 0;
+
+  if (
+    can_stock_coffee &&
+    can_stock_soap &&
+    (coffee_ordered != 0 || soap_ordered != 0)
+  ) {
+    if (seller.stock_coffee != undefined && seller.stock_coffee > 0) {
+      seller.stock_coffee = seller.stock_coffee - coffee_ordered;
+    }
+
+    if (seller.stock_soap != undefined && seller.stock_soap > 0) {
       seller.stock_soap = seller.stock_soap - soap_ordered;
     }
 

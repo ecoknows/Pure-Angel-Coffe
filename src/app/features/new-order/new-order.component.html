@@ -1,17 +1,23 @@
 <div class="new-order">
   <div class="legend">
     <strong>AVAILABLE COFFEE :</strong>
-    <span>
+    <span *ngIf="!(user$ | async)?.is_admin">
       {{ (user$ | async)?.stock_coffee_b1t1 || 0 }} B1T1,
       {{ (user$ | async)?.stock_coffee_b2t3 || 0 }} B2T3
+    </span>
+    <span *ngIf="(user$ | async)?.is_admin">
+      {{ (user$ | async)?.stock_coffee || 0 }} BOXES
     </span>
   </div>
 
   <div class="legend">
     <strong>AVAILABLE SOAP :</strong>
-    <span>
+    <span *ngIf="!(user$ | async)?.is_admin">
       {{ (user$ | async)?.stock_soap_b1t1 || 0 }} B1T1,
       {{ (user$ | async)?.stock_soap_b2t3 || 0 }} B2T3
+    </span>
+    <span *ngIf="(user$ | async)?.is_admin">
+      {{ (user$ | async)?.stock_soap || 0 }} BOXES
     </span>
   </div>
 
