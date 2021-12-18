@@ -5,6 +5,7 @@ import { UserState } from '@core/redux/user/user.reducer';
 import { AuthService } from '@core/services/auth.service';
 import { IncomeHistoryService } from '@core/services/income-history.service';
 import { Store } from '@ngrx/store';
+import { INCOME_CHARGE } from '@server/constants';
 import { ColumnMode } from '@swimlane/ngx-datatable';
 import { Observable } from 'rxjs';
 
@@ -32,6 +33,15 @@ export class IncomeHistoryComponent implements OnInit {
     this.title = this.route.snapshot.queryParamMap.get('income');
     this.dataSource$ = this.store.select('incomeHistoryReducer');
     this.user$ = this.store.select('userReducer');
+  }
+
+  totalIncome(income: number) {
+    const charge = income * INCOME_CHARGE;
+    return income - charge;
+  }
+
+  incomeCharge(income: number) {
+    return income * INCOME_CHARGE;
   }
 
   ngOnInit() {

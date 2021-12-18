@@ -29,6 +29,7 @@ import {
   SOAP,
   B1T1_MEGA_CENTER_AE_REBATES,
   B2T3_MEGA_CENTER_AE_REBATES,
+  INCOME_CHARGE,
 } from "../constants.js";
 import Purchase from "../models/purchase.model.js";
 import AutomaticEquivalentRebates from "../models/automatic-equivalent-rebates.model.js";
@@ -200,16 +201,23 @@ export async function automaticEquivalentRebatesIncome(req, res, next) {
       const coffee_total_income = body.coffee_package * COFFEE_B1T1_AE_REBATES;
       const soap_total_income = body.soap_package * SOAP_B1T1_AE_REBATES;
 
+      const coffee_total_income_with_charge =
+        coffee_total_income - coffee_total_income * INCOME_CHARGE;
+      const soap_total_income_with_charge =
+        soap_total_income - soap_total_income * INCOME_CHARGE;
+
       const total_income = coffee_total_income + soap_total_income;
+      const total_income_charge =
+        coffee_total_income_with_charge + soap_total_income_with_charge;
 
       referral_verification.b1t1_ae_rebates =
-        referral_verification.b1t1_ae_rebates + total_income;
+        referral_verification.b1t1_ae_rebates + total_income_charge;
 
       referral_verification.overall_income =
-        referral_verification.overall_income + total_income;
+        referral_verification.overall_income + total_income_charge;
 
       referral_verification.unpaid_income =
-        referral_verification.unpaid_income + total_income;
+        referral_verification.unpaid_income + total_income_charge;
 
       await createTotalIncome(
         referral_user,
@@ -242,16 +250,24 @@ export async function automaticEquivalentRebatesIncome(req, res, next) {
       const coffee_total_income = body.coffee_package * COFFEE_B2T3_AE_REBATES;
       const soap_total_income = body.soap_package * SOAP_B2T3_AE_REBATES;
 
+      const coffee_total_income_with_charge =
+        coffee_total_income - coffee_total_income * INCOME_CHARGE;
+      const soap_total_income_with_charge =
+        soap_total_income - soap_total_income * INCOME_CHARGE;
+
       const total_income = coffee_total_income + soap_total_income;
 
+      const total_income_charge =
+        coffee_total_income_with_charge + soap_total_income_with_charge;
+
       referral_verification.b2t3_ae_rebates =
-        referral_verification.b2t3_ae_rebates + total_income;
+        referral_verification.b2t3_ae_rebates + total_income_charge;
 
       referral_verification.overall_income =
-        referral_verification.overall_income + total_income;
+        referral_verification.overall_income + total_income_charge;
 
       referral_verification.unpaid_income =
-        referral_verification.unpaid_income + total_income;
+        referral_verification.unpaid_income + total_income_charge;
 
       await createTotalIncome(
         referral_user,
@@ -302,15 +318,22 @@ export async function purchaseIncome(req, res, next) {
       const soap_total_income =
         SOAP_B1T1_MEGA_CENTER_INCOME * body.soap_package;
 
-      const total_income = coffee_total_income + soap_total_income;
+      const coffee_total_income_with_charge =
+        coffee_total_income - coffee_total_income * INCOME_CHARGE;
+
+      const soap_total_income_with_charge =
+        soap_total_income - soap_total_income * INCOME_CHARGE;
+
+      const total_income =
+        coffee_total_income_with_charge + soap_total_income_with_charge;
 
       seller.coffee_income = seller.coffee_income
-        ? seller.coffee_income + coffee_total_income
-        : coffee_total_income;
+        ? seller.coffee_income + coffee_total_income_with_charge
+        : coffee_total_income_with_charge;
 
       seller.soap_income = seller.soap_income
-        ? seller.soap_income + soap_total_income
-        : soap_total_income;
+        ? seller.soap_income + soap_total_income_with_charge
+        : soap_total_income_with_charge;
 
       seller.overall_income = seller.overall_income + total_income;
       seller.unpaid_income = seller.unpaid_income + total_income;
@@ -587,18 +610,21 @@ export async function stockistRepeatPurchase(req, res, next) {
     if (body.package == "b1t1") {
       if (coffee_package) {
         const total_income = coffee_package * B1T1_MEGA_CENTER_AE_REBATES;
+        const total_income_with_charge =
+          total_income - total_income * INCOME_CHARGE;
 
         user_verifaciton_mega_center.stockist_repeat_purchase_coffee =
           user_verifaciton_mega_center.stockist_repeat_purchase_coffee
             ? user_verifaciton_mega_center.stockist_repeat_purchase_coffee +
-              total_income
-            : total_income;
+              total_income_with_charge
+            : total_income_with_charge;
 
         user_verifaciton_mega_center.overall_income =
-          user_verifaciton_mega_center.overall_income + total_income;
+          user_verifaciton_mega_center.overall_income +
+          total_income_with_charge;
 
         user_verifaciton_mega_center.unpaid_income =
-          user_verifaciton_mega_center.unpaid_income + total_income;
+          user_verifaciton_mega_center.unpaid_income + total_income_with_charge;
 
         await createTotalIncome(
           stockist_mega_center,
@@ -619,17 +645,20 @@ export async function stockistRepeatPurchase(req, res, next) {
 
       if (soap_package) {
         const total_income = soap_package * B1T1_MEGA_CENTER_AE_REBATES;
+        const total_income_with_charge =
+          total_income - total_income * INCOME_CHARGE;
 
         user_verifaciton_mega_center.stockist_repeat_purchase_soap =
           user_verifaciton_mega_center.stockist_repeat_purchase_soap
             ? user_verifaciton_mega_center.stockist_repeat_purchase_soap +
-              total_income
-            : total_income;
+              total_income_with_charge
+            : total_income_with_charge;
 
         user_verifaciton_mega_center.overall_income =
-          user_verifaciton_mega_center.overall_income + total_income;
+          user_verifaciton_mega_center.overall_income +
+          total_income_with_charge;
         user_verifaciton_mega_center.unpaid_income =
-          user_verifaciton_mega_center.unpaid_income + total_income;
+          user_verifaciton_mega_center.unpaid_income + total_income_with_charge;
 
         await createTotalIncome(
           stockist_mega_center,
@@ -650,18 +679,21 @@ export async function stockistRepeatPurchase(req, res, next) {
     } else if (body.package == "b2t3") {
       if (coffee_package) {
         const total_income = coffee_package * B2T3_MEGA_CENTER_AE_REBATES;
+        const total_income_with_charge =
+          total_income - total_income * INCOME_CHARGE;
 
         user_verifaciton_mega_center.stockist_repeat_purchase_coffee =
           user_verifaciton_mega_center.stockist_repeat_purchase_coffee
             ? user_verifaciton_mega_center.stockist_repeat_purchase_coffee +
-              total_income
-            : total_income;
+              total_income_with_charge
+            : total_income_with_charge;
 
         user_verifaciton_mega_center.overall_income =
-          user_verifaciton_mega_center.overall_income + total_income;
+          user_verifaciton_mega_center.overall_income +
+          total_income_with_charge;
 
         user_verifaciton_mega_center.unpaid_income =
-          user_verifaciton_mega_center.unpaid_income + total_income;
+          user_verifaciton_mega_center.unpaid_income + total_income_with_charge;
 
         await createTotalIncome(
           stockist_mega_center,
@@ -682,17 +714,20 @@ export async function stockistRepeatPurchase(req, res, next) {
 
       if (soap_package) {
         const total_income = soap_package * B2T3_MEGA_CENTER_AE_REBATES;
+        const total_income_with_charge =
+          total_income - total_income * INCOME_CHARGE;
 
         user_verifaciton_mega_center.stockist_repeat_purchase_soap =
           user_verifaciton_mega_center.stockist_repeat_purchase_soap
             ? user_verifaciton_mega_center.stockist_repeat_purchase_soap +
-              total_income
-            : total_income;
+              total_income_with_charge
+            : total_income_with_charge;
 
         user_verifaciton_mega_center.overall_income =
-          user_verifaciton_mega_center.overall_income + total_income;
+          user_verifaciton_mega_center.overall_income +
+          total_income_with_charge;
         user_verifaciton_mega_center.unpaid_income =
-          user_verifaciton_mega_center.unpaid_income + total_income;
+          user_verifaciton_mega_center.unpaid_income + total_income_with_charge;
 
         await createTotalIncome(
           stockist_mega_center,

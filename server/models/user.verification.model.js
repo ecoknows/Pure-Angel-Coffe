@@ -43,10 +43,10 @@ const userVerificationSchema = new mongoose.Schema(
     number_of_stockist: { type: Number },
     number_of_mega_center: { type: Number },
 
-    new_member_income: { type: Number },
-
     b1t1_ae_rebates: { type: Number, default: 0 },
     b2t3_ae_rebates: { type: Number, default: 0 },
+
+    new_member_income: { type: Number },
 
     coffee_income: { type: Number },
     soap_income: { type: Number },
@@ -56,10 +56,6 @@ const userVerificationSchema = new mongoose.Schema(
 
     stockist_repeat_purchase_coffee: { type: Number },
     stockist_repeat_purchase_soap: { type: Number },
-
-    system: {
-      payment: { type: Number },
-    },
 
     mega_center: {
       user_id: { type: String, index: true },

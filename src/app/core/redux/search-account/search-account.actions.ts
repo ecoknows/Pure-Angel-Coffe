@@ -39,3 +39,11 @@ export const setSearchPlaceUnderAccount = createAction(
 export const resetSearchPlaceUnderAccount = createAction(
   '[Reset PlaceUnder Account] Reset Account'
 );
+
+export const setSearchMegaCenters = createAction(
+  '[Upgrade Account Component] SearchMegaCenters',
+  props<{ list: UserState[] }>()
+);
+export const resetSearchMegaCenters = createAction(
+  '[Upgrade Account Component] Reset Search MegaCenters'
+);

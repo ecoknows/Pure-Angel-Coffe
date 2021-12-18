@@ -49,7 +49,7 @@
         <li>
           Status :
           <span *ngIf="(searchAccount$ | async)?.is_mega_center"
-            >Mega Center</span
+            >Mega Center, {{ (searchAccount$ | async)?.area }}</span
           >
           <span *ngIf="(searchAccount$ | async)?.is_stockist">Stockist</span>
           <span *ngIf="(searchAccount$ | async)?.is_admin">Admin</span>
@@ -76,32 +76,44 @@
       </mat-button-toggle-group>
       <br />
 
-      <mat-form-field
-        appearance="fill"
-        *ngIf="secondFormGroup.get('status')?.value == 'mega-center'"
-      >
-        <mat-label>Assign Area</mat-label>
-        <input
-          matInput
-          placeholder="Ex. AKL"
-          formControlName="assign_area"
-          oninput="this.value = this.value.toUpperCase()"
-        />
-      </mat-form-field>
+      <div *ngIf="secondFormGroup.get('status')?.value == 'mega-center'">
+        <mat-form-field appearance="fill">
+          <mat-label>Area Code</mat-label>
+          <input
+            matInput
+            placeholder="Ex. AKL"
+            formControlName="area_code"
+            oninput="this.value = this.value.toUpperCase()"
+          />
+        </mat-form-field>
+      </div>
 
-      <mat-form-field
-        appearance="fill"
-        *ngIf="secondFormGroup.get('status')?.value == 'stockist'"
-      >
-        <mat-label>Mega Center</mat-label>
-        <input
-          matInput
-          placeholder="Ex. MLA023"
-          formControlName="mega_center_account_number"
-          required
-          oninput="this.value = this.value.toUpperCase()"
-        />
-      </mat-form-field>
+      <div *ngIf="secondFormGroup.get('status')?.value == 'mega-center'">
+        <mat-form-field appearance="fill">
+          <mat-label>Assign Area</mat-label>
+          <input
+            matInput
+            placeholder="Ex. Aklan"
+            formControlName="assign_area"
+            oninput="this.value = this.value.toUpperCase()"
+          />
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="secondFormGroup.get('status')?.value == 'stockist'">
+        <mat-form-field appearance="fill">
+          <mat-label>Pick A Mega Center</mat-label>
+          <mat-select formControlName="mega_center">
+            <mat-option
+              *ngFor="let mega_center of this.megaCenters$ | async"
+              [value]="mega_center._id"
+            >
+              {{ mega_center.account_number }}, {{ mega_center.area }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <div>
         <button mat-button matStepperPrevious>Back</button>
         <button mat-button (click)="checkIfMegaCenter(stepper)">Next</button>
@@ -140,7 +152,7 @@
       <li>
         Current Status :
         <span *ngIf="(searchAccount$ | async)?.is_mega_center"
-          >Mega Center</span
+          >Mega Center, {{ (searchAccount$ | async)?.area }}</span
         >
         <span *ngIf="(searchAccount$ | async)?.is_stockist">Stockist</span>
         <span *ngIf="(searchAccount$ | async)?.is_admin">Admin</span>
@@ -159,7 +171,7 @@
           >Stockist</span
         >
         <span *ngIf="secondFormGroup.get('status')?.value == 'mega-center'"
-          >Mega Center</span
+          >Mega Center, {{ secondFormGroup.get("assign_area")?.value }}</span
         >
         <span *ngIf="secondFormGroup.get('status')?.value == 'member'"
           >Member</span

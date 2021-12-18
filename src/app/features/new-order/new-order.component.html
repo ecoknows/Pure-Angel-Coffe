@@ -60,9 +60,11 @@
           <li>
             Status :
             <span *ngIf="(searchAccount$ | async)?.is_mega_center"
-              >Mega Center</span
+              >Mega Center, {{ (searchAccount$ | async)?.area }}</span
             >
-            <span *ngIf="(searchAccount$ | async)?.is_stockist">Stockist</span>
+            <span *ngIf="(searchAccount$ | async)?.is_stockist"
+              >Stockist, {{ (searchAccount$ | async)?.area }}</span
+            >
             <span *ngIf="(searchAccount$ | async)?.is_admin">Admin</span>
             <span
               *ngIf="

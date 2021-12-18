@@ -16,6 +16,7 @@ import {
   STOCKIST_NEW_MEMBER_INCOME,
   PAIRING_BONUS_MAX_COUNT_PER_DAY,
   PAIRING_PRODUCT_VOUCHER_PAYMENT,
+  INCOME_CHARGE,
 } from "../constants.js";
 import IndirectReferral from "../models/indirect-referral.model.js";
 import PairingBonus from "../models/pairing-bonus.model.js";
@@ -425,10 +426,14 @@ export async function payDirectReferral(req, res, next) {
     const user_that_invite_user = await User.findById(user_that_invite.user_id);
 
     user_that_invite.direct_referral =
-      user_that_invite.direct_referral + DIRECT_REFERRAL_PAYMENT;
+      user_that_invite.direct_referral +
+      DIRECT_REFERRAL_PAYMENT -
+      DIRECT_REFERRAL_PAYMENT * INCOME_CHARGE;
 
     user_that_invite.overall_income =
-      user_that_invite.overall_income + DIRECT_REFERRAL_PAYMENT;
+      user_that_invite.overall_income +
+      DIRECT_REFERRAL_PAYMENT -
+      DIRECT_REFERRAL_PAYMENT * INCOME_CHARGE;
 
     await createTotalIncome(
       user_that_invite_user,
@@ -517,6 +522,8 @@ export async function newMemberIncome(req, res, next) {
   const user = req.user;
 
   const total_income = req.total_income;
+  const total_income_with_charge =
+    req.total_income - req.total_income * INCOME_CHARGE;
 
   if (user.is_mega_center || user.is_stockist || user.is_admin) {
     const user_verification = await UserVerification.findOne({
@@ -524,23 +531,24 @@ export async function newMemberIncome(req, res, next) {
     });
     if (user_verification.new_member_income) {
       user_verification.new_member_income =
-        user_verification.new_member_income + total_income;
+        user_verification.new_member_income + total_income_with_charge;
 
       user_verification.overall_income =
-        user_verification.overall_income + total_income;
+        user_verification.overall_income + total_income_with_charge;
 
       user_verification.unpaid_income =
-        user_verification.unpaid_income + total_income;
+        user_verification.unpaid_income + total_income_with_charge;
 
       await createTotalIncome(user, "New Member Income", total_income);
     } else {
-      user_verification.new_member_income = total_income;
+      user_verification.new_member_income = total_income_with_charge;
 
       user_verification.overall_income =
-        user_verification.overall_income + total_income;
+        user_verification.overall_income + total_income_with_charge;
 
       user_verification.unpaid_income =
-        user_verification.unpaid_income + total_income;
+        user_verification.unpaid_income + total_income_with_charge;
+
       await createTotalIncome(user, "New Member Income", total_income);
     }
 
@@ -548,20 +556,6 @@ export async function newMemberIncome(req, res, next) {
 
     await createNewMemberIncome(req);
   }
-
-  next();
-}
-
-export async function unpaidIncome(req, res, next) {
-  const user = req.user;
-  const total_income = req.total_income;
-
-  if (total_income) {
-    user.unpaid_income = user.unpaid_income + total_income;
-    user.overall_income = user.overall_income + total_income;
-  }
-
-  await user.save();
 
   next();
 }
@@ -766,17 +760,20 @@ async function indirectReferralRecursion(
 
   if (indirect_referral_verification && count < INDIRECT_REFERRAL_LIMIT) {
     if (user_to_verify.verified) {
+      const indirect_referral_payment_with_charge =
+        INDIRECT_REFERRAL_PAYMENT - INDIRECT_REFERRAL_PAYMENT * INCOME_CHARGE;
+
       indirect_referral_verification.indirect_referral =
         indirect_referral_verification.indirect_referral +
-        INDIRECT_REFERRAL_PAYMENT;
+        indirect_referral_payment_with_charge;
 
       indirect_referral_verification.overall_income =
         indirect_referral_verification.overall_income +
-        INDIRECT_REFERRAL_PAYMENT;
+        indirect_referral_payment_with_charge;
 
       indirect_referral_verification.unpaid_income =
         indirect_referral_verification.unpaid_income +
-        INDIRECT_REFERRAL_PAYMENT;
+        indirect_referral_payment_with_charge;
 
       await createTotalIncome(
         indirect_referral_user,
@@ -856,11 +853,13 @@ async function updatePairingStatus(user, pairingBonus) {
 
     user.pairing_bonus_paired_count = user.pairing_bonus_paired_count + 1;
 
-    user.pairing_bonus = user.pairing_bonus + PAIRING_BONUS_PAYMENT;
-    pairingBonus.income = PAIRING_BONUS_PAYMENT;
+    const pairing_bonus_with_charge =
+      PAIRING_BONUS_PAYMENT - PAIRING_BONUS_PAYMENT * INCOME_CHARGE;
 
-    user.overall_income = user.overall_income + PAIRING_BONUS_PAYMENT;
-    user.unpaid_income = user.unpaid_income + PAIRING_BONUS_PAYMENT;
+    user.pairing_bonus = user.pairing_bonus + pairing_bonus_with_charge;
+
+    user.overall_income = user.overall_income + pairing_bonus_with_charge;
+    user.unpaid_income = user.unpaid_income + pairing_bonus_with_charge;
 
     pairingBonus.payed = true;
 

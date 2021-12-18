@@ -64,6 +64,13 @@ UserRouter.get(
         };
       }
 
+      if (user_verification.mega_center.user_id) {
+        const mega_center = await User.findById(
+          user_verification.mega_center.user_id
+        );
+        user.area = mega_center.area;
+      }
+
       res.send({
         message: "Successfully fetch User",
         data: { user, user_verification, admin_storage },

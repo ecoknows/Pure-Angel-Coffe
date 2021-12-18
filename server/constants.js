@@ -1,3 +1,6 @@
+// 10 PERCENT
+export const INCOME_CHARGE = 0.1;
+
 export const INDIRECT_REFERRAL_LIMIT = 5;
 export const DIRECT_REFERRAL_PAYMENT = 100;
 export const INDIRECT_REFERRAL_PAYMENT = 25;

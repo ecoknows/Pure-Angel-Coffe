@@ -16,7 +16,6 @@ import {
   updateGenealogy,
   checkTotalIncome,
   newMemberIncome,
-  unpaidIncome,
 } from "../middlewares/new-member.js";
 
 import Genealogy from "../models/genealogy.model.js";
@@ -82,7 +81,6 @@ NewMemberRouter.post(
   recurModifyBranchCountOfRoot,
   checkTotalIncome,
   newMemberIncome,
-  unpaidIncome,
   payDirectReferral,
   payIndirectReferral,
   checkIfThereIsPairingBonus,

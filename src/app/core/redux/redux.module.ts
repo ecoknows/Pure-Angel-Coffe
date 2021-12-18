@@ -8,6 +8,7 @@ import {
   searchReferralAccountReducer,
   searchPlaceUnderAccountReducer,
   searchMegaCenterAccountReducer,
+  searchMegaCentersReducer,
 } from './search-account/search-account.reducers';
 import { incomeHistoryReducer } from './income-history/income-history.reducer';
 import { pinHistoryReducer } from './pin-history/pin-history.reducer';
@@ -20,6 +21,7 @@ const reducer: object = {
   searchReferralAccountReducer: searchReferralAccountReducer,
   searchMegaCenterAccountReducer: searchMegaCenterAccountReducer,
   searchPlaceUnderAccountReducer: searchPlaceUnderAccountReducer,
+  searchMegaCentersReducer: searchMegaCentersReducer,
   searchGenealogyReducer: searchGenealogyReducer,
   incomeHistoryReducer: incomeHistoryReducer,
   pinHistoryReducer: pinHistoryReducer,

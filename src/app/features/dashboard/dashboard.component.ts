@@ -59,4 +59,35 @@ export class DashboardComponent implements OnInit {
     }
     return false;
   }
+
+  getUserRole(user: UserState | null) {
+    if (user?.is_admin) {
+      return 'Admin';
+    }
+
+    if (user?.is_mega_center) {
+      return 'Mega Center';
+    }
+
+    if (user?.is_stockist) {
+      return 'Stockist';
+    }
+
+    return 'Member';
+  }
+  getClassUserRole(user: UserState | null) {
+    if (user?.is_admin) {
+      return 'admin';
+    }
+
+    if (user?.is_mega_center) {
+      return 'mega-center';
+    }
+
+    if (user?.is_stockist) {
+      return 'stockist';
+    }
+
+    return 'member';
+  }
 }

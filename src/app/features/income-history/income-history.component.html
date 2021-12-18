@@ -2,47 +2,52 @@
   <div class="legend">
     <h1>
       <ng-container *ngIf="title == 'indirect-referral'"
-        >Indirect Referral</ng-container
+        >Indirect Referral History</ng-container
       >
       <ng-container *ngIf="title == 'direct-referral'"
-        >Direct Referral</ng-container
+        >Direct Referral History</ng-container
       >
       <ng-container *ngIf="title == 'pairing-bonus'"
-        >Pairing Bonus</ng-container
+        >Pairing Bonus History</ng-container
       >
       <ng-container *ngIf="title == 'ae-rebates-b1t1'"
-        >AE Rebates B1T1</ng-container
+        >AE Rebates B1T1 History</ng-container
       >
       <ng-container *ngIf="title == 'ae-rebates-b2t3'"
-        >AE Rebates B2T3</ng-container
+        >AE Rebates B2T3 History</ng-container
       >
       <ng-container *ngIf="title == 'new-member'"
-        >New Member Income</ng-container
+        >New Member Income History</ng-container
       >
       <ng-container *ngIf="title == 'coffee-income'"
-        >Coffee Income</ng-container
+        >Coffee Income History</ng-container
       >
-      <ng-container *ngIf="title == 'soap-income'">Soap Income</ng-container>
+      <ng-container *ngIf="title == 'soap-income'"
+        >Soap Income History</ng-container
+      >
       <ng-container *ngIf="title == 'stockist-new-order-b1t1'"
-        >B1T1 Stockist Encode New Order Income</ng-container
+        >B1T1 Stockist Encode New Order Income History</ng-container
       >
       <ng-container *ngIf="title == 'stockist-new-order-b2t3'"
-        >B2T3 Stockist Encode New Order Income</ng-container
+        >B2T3 Stockist Encode New Order Income History</ng-container
       >
       <ng-container *ngIf="title == 'stockist-repeat-purchase-coffee'"
-        >Stockist Repeat Purchase Coffee Income</ng-container
+        >Stockist Repeat Purchase Coffee Income History</ng-container
       >
       <ng-container *ngIf="title == 'stockist-repeat-purchase-soap'"
-        >Stockist Repeat Purchase Soap Income</ng-container
+        >Stockist Repeat Purchase Soap Income History</ng-container
       >
-      <ng-container *ngIf="title == 'total-income'">Total Income</ng-container>
+      <ng-container *ngIf="title == 'total-income'"
+        >Total Income History</ng-container
+      >
       <ng-container *ngIf="title == 'unclaimed-income'"
-        >Unclaimed Income</ng-container
+        >Unclaimed Income History</ng-container
       >
       <ng-container *ngIf="title == 'product-voucher'"
-        >Product Voucher</ng-container
+        >Product Voucher History</ng-container
       >
     </h1>
+    <p class="note">Reminder: there is a 10% charge in every income</p>
 
     <ng-container *ngIf="title == 'unclaimed-income'">
       <ul>
@@ -84,9 +89,17 @@
     >
       <ngx-datatable-column name="Buyer">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          {{ row.buyer.first_name }} {{ row.buyer.last_name }}
+          <div style="font-size: 1rem">
+            <strong>
+              {{ row.buyer.first_name }} {{ row.buyer.last_name }}
+            </strong>
+          </div>
           <div class="primary">
             {{ row.buyer.account_number }}
+          </div>
+
+          <div>
+            {{ row.createdAt | date: "MMM d, y, h:mm a" }}
           </div>
         </ng-template>
       </ngx-datatable-column>
@@ -164,11 +177,15 @@
 
     <ngx-datatable-column name="Income">
       <ng-template let-row="row" ngx-datatable-cell-template>
-        <div class="primary">₱ {{ row.value | number: "1.2-2" }}</div>
-        <div>
-          <strong>
-            {{ row.createdAt | date: "short" }}
-          </strong>
+        <div class="income">
+          <div class="first">₱ {{ row.value | number: "1.2-2" }}</div>
+          <div class="charge">
+            - ₱ {{ incomeCharge(row.value) | number: "1.2-2" }}
+          </div>
+          <mat-divider></mat-divider>
+          <div class="result">
+            ₱ {{ totalIncome(row.value) | number: "1.2-2" }}
+          </div>
         </div>
       </ng-template>
     </ngx-datatable-column>

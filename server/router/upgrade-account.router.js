@@ -30,6 +30,24 @@ UpgradeAccountRouter.post(
   })
 );
 
+UpgradeAccountRouter.get(
+  "/search-mega-centers",
+  verifyUserToken,
+  expressAsyncHandler(async (req, res) => {
+    const mega_centers = await User.find({
+      is_mega_center: true,
+    });
+    if (mega_centers) {
+      res.send({
+        message: "Successfully Fetch Mega Centers",
+        data: mega_centers,
+      });
+    } else {
+      res.status(404).send({ message: "Cannot find megacenters" });
+    }
+  })
+);
+
 UpgradeAccountRouter.post(
   "/upgrade",
   verifyUserToken,

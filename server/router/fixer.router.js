@@ -2,6 +2,20 @@ import UserVerification from "../models/user.verification.model.js";
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import User from "../models/user.model.js";
+import {
+  FixAERebatesB1T1Income,
+  FixAERebatesB2T3Income,
+  FixCoffeeIncome,
+  FixNewMemberIncome,
+  FixSoapIncome,
+  FixStockistENB1T1Income,
+  FixStockistENB2T3Income,
+  FixStockistRepeatCoffeeIncome,
+  FixStockistRepeatSoapIncome,
+  FixUnpaidIncome,
+  InitializeUser,
+} from "../utils/fixer.js";
+import PairingBonus from "../models/pairing-bonus.model.js";
 
 const FixerRouter = express.Router();
 
@@ -89,4 +103,53 @@ async function UpdateMegaCenter(req) {
     "DONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
   );
 }
+
+FixerRouter.get(
+  "/verify/unpaid-income",
+  expressAsyncHandler(async (req, res) => {
+    const user = await UserVerification.find(
+      {
+        unpaid_income: { $gt: 0 },
+      },
+      { unpaid_income: 1, account_number: 1, _id: 0 }
+    );
+
+    res.send({ message: "DONE!", user });
+  })
+);
+
+FixerRouter.post(
+  "/verify/fix-income",
+  InitializeUser,
+  FixAERebatesB1T1Income,
+  FixAERebatesB2T3Income,
+  FixNewMemberIncome,
+  FixCoffeeIncome,
+  FixSoapIncome,
+  FixStockistENB1T1Income,
+  FixStockistENB2T3Income,
+  FixStockistRepeatCoffeeIncome,
+  FixStockistRepeatSoapIncome,
+  FixUnpaidIncome,
+  expressAsyncHandler(async (req, res) => {
+    res.send({ message: "SUCCESSFULLY FIX INCOME!!" });
+  })
+);
+
+FixerRouter.get(
+  "/verify/pairing-bonus",
+  expressAsyncHandler(async (req, res) => {
+    const pairing = await PairingBonus.find({});
+
+    if (pairing) {
+      for (let i = 0; i < pairing.length; i++) {
+        const change = await PairingBonus.findById(pairing[i]._id);
+        change.value = 300;
+        await change.save();
+      }
+    }
+    res.send({ message: "SUCCESSFULLY FIX Pairing!!" });
+  })
+);
+
 export default FixerRouter;

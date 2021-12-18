@@ -13,6 +13,7 @@ export interface UserState {
   max_member_to_verify?: number;
   member_that_verified?: number;
   secret_code_suffix?: string;
+  area?: string;
 
   ending_pin?: number;
   number_of_pin?: number;

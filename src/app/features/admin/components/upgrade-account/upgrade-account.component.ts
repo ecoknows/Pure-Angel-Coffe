@@ -20,15 +20,20 @@ export class UpgradeAccountComponent implements OnInit {
   secondFormGroup!: FormGroup;
 
   searchAccount$: Observable<UserState>;
+  megaCenters$: Observable<UserState[]>;
 
   constructor(
     private _formBuilder: FormBuilder,
-    private store: Store<{ searchAccountReducer: UserState }>,
+    private store: Store<{
+      searchAccountReducer: UserState;
+      searchMegaCentersReducer: UserState[];
+    }>,
     private upgradeAccountService: UpgradeAccountService,
 
     private _snackBar: MatSnackBar
   ) {
     this.searchAccount$ = this.store.select('searchAccountReducer');
+    this.megaCenters$ = this.store.select('searchMegaCentersReducer');
   }
 
   ngOnInit() {
@@ -37,27 +42,30 @@ export class UpgradeAccountComponent implements OnInit {
     });
     this.secondFormGroup = this._formBuilder.group({
       status: ['', Validators.required],
+      area_code: [''],
       assign_area: [''],
-      mega_center_account_number: [''],
+      mega_center: [''],
     });
 
     this.store.dispatch(resetSearchAccount());
+    this.upgradeAccountService.searchMegaCenters();
   }
 
   upgrade(search_account: UserState, stepper: any) {
     const status = this.secondFormGroup.get('status')?.value;
     const assign_area = this.secondFormGroup.get('assign_area')?.value;
-    const mega_center_account_number = this.secondFormGroup.get(
-      'mega_center_account_number'
-    )?.value;
+    const area_code = this.secondFormGroup.get('area_code')?.value;
+
+    const mega_center = this.secondFormGroup.get('mega_center')?.value;
 
     if (search_account._id) {
       this.upgradeAccountService.upgrade(
         {
           account_id: search_account._id,
           status,
+          area_code,
           assign_area,
-          mega_center_account_number,
+          mega_center,
         },
         stepper
       );

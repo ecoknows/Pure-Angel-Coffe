@@ -14,13 +14,12 @@ const userSchema = new mongoose.Schema(
     contact_number: { type: String, required: true, index: true },
 
     secret_code_suffix: { type: String, required: true },
+    area: { type: String },
 
     ending_pin: { type: Number },
     number_of_pin: { type: Number },
 
     free_account_leader: { type: Number },
-
-    area: { type: String },
 
     mega_center: {
       user_id: { type: String, index: true },

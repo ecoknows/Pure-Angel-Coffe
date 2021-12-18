@@ -12,6 +12,8 @@ import {
   resetSearchPlaceUnderAccount,
   setSearchMegaCenterAccount,
   resetSearchMegaCenterAccount,
+  setSearchMegaCenters,
+  resetSearchMegaCenters,
 } from './search-account.actions';
 
 export const SEARCH_GENEALOGY_INITIAL_STATE: Genealogy = {};
@@ -21,6 +23,8 @@ export const SEARCH_MEGA_CENTER_ACCOUNT_INITIAL_STATE: UserState = {};
 
 export const SEARCH_REFERRAL_ACCOUNT_INITIAL_STATE: UserState = {};
 export const SEARCH_PLACE_UNDER_ACCOUNT_INITIAL_STATE: UserState = {};
+
+export const SEARCH_MEGA_CENTERS: UserState[] = [];
 
 const SEARCH_GENEALOGY_REDUCER = createReducer(
   SEARCH_GENEALOGY_INITIAL_STATE,
@@ -52,6 +56,12 @@ const SEARCH_PLACE_UNDER_ACCOUNT_REDUCER = createReducer(
   on(resetSearchPlaceUnderAccount, (state) => ({}))
 );
 
+const SEARCH_MEGA_CENTERS_REDUCER = createReducer(
+  SEARCH_MEGA_CENTERS,
+  on(setSearchMegaCenters, (state, { list }) => list),
+  on(resetSearchMegaCenters, (state) => [])
+);
+
 export function searchGenealogyReducer(state: any, action: any) {
   return SEARCH_GENEALOGY_REDUCER(state, action);
 }
@@ -70,4 +80,8 @@ export function searchReferralAccountReducer(state: any, action: any) {
 
 export function searchPlaceUnderAccountReducer(state: any, action: any) {
   return SEARCH_PLACE_UNDER_ACCOUNT_REDUCER(state, action);
+}
+
+export function searchMegaCentersReducer(state: any, action: any) {
+  return SEARCH_MEGA_CENTERS_REDUCER(state, action);
 }

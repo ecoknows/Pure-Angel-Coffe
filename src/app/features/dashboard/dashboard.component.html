@@ -21,7 +21,7 @@
 
   <div class="dashboard-top-info">
     <div
-      class="profile-pic"
+      class="profile-pic border-{{ getClassUserRole(user$ | async) }}"
       [ngStyle]="{ 'background-image': 'url(\'' + 'assets/node.svg' + '\')' }"
     ></div>
 
@@ -31,7 +31,20 @@
           Hello,
           {{ (user$ | async)?.first_name + " " + (user$ | async)?.last_name }}
         </h1>
-        <h2>Account Number: {{ (user$ | async)?.account_number }}</h2>
+        <h2>
+          Account Number:
+          <span class="primary">{{ (user$ | async)?.account_number }}</span>
+        </h2>
+        <h2 *ngIf="(user$ | async)?.area">
+          Area: <span class="primary">{{ (user$ | async)?.area }}</span>
+        </h2>
+
+        <h2>
+          Status:
+          <span class="{{ getClassUserRole(user$ | async) }}">{{
+            getUserRole(user$ | async)
+          }}</span>
+        </h2>
       </div>
 
       <div class="total-assets">

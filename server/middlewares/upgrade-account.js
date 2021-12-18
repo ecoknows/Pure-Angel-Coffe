@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import Genealogy from "../models/genealogy.model.js";
+import UserVerification from "../models/user.verification.model.js";
 
 export async function initializeUpgradeAccount(req, res, next) {
   const body = req.body;
@@ -27,14 +28,25 @@ export async function upgradeToStockist(req, res, next) {
     searched_account.is_mega_center = undefined;
     await searched_account.save();
 
-    const mega_center = await User.findOne({
-      account_number: body.mega_center_account_number,
+    const mega_center = await User.findById(body.mega_center);
+
+    const searched_account_verify = await UserVerification.findOne({
+      user_id: searched_account._id,
     });
 
     if (mega_center) {
       searched_account.secret_code_suffix = mega_center.secret_code_suffix;
+      searched_account.area = mega_center.area;
+
+      searched_account_verify.mega_center = {
+        user_id: mega_center._id,
+        account_number: mega_center.account_number,
+        first_name: mega_center.first_name,
+        last_name: mega_center.last_name,
+      };
 
       await searched_account.save();
+      await searched_account_verify.save();
 
       next();
     } else {
@@ -54,7 +66,8 @@ export async function upgradeToMegaCenter(req, res, next) {
 
   if (body.status == "mega-center") {
     searched_account.is_mega_center = true;
-    searched_account.secret_code_suffix = body.assign_area;
+    searched_account.secret_code_suffix = body.area_code;
+    searched_account.area = body.assign_area;
     searched_account.is_stockist = undefined;
     await searched_account.save();
   }
