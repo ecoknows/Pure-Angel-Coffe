@@ -88,14 +88,14 @@ export async function createChildUser(req, res, next) {
     contact_number: body.contact_number,
     secret_code_suffix: referral_user.secret_code_suffix,
 
-    mega_center: referral_user?.is_mega_center
+    mega_center: referral_user.is_mega_center
       ? {
           user_id: referral_user._id,
           account_number: referral_user.account_number,
           first_name: referral_user.first_name,
           last_name: referral_user.last_name,
         }
-      : referral_user?.mega_center
+      : referral_user.mega_center
       ? {
           user_id: referral_user.mega_center.user_id,
           account_number: referral_user.mega_center
@@ -141,14 +141,14 @@ export async function createChildVerification(req, res, next) {
     first_name: child_user.first_name,
     last_name: child_user.last_name,
 
-    mega_center: referral_user?.is_mega_center
+    mega_center: referral_user.is_mega_center
       ? {
           user_id: referral_user._id,
           account_number: referral_user.account_number,
           first_name: referral_user.first_name,
           last_name: referral_user.last_name,
         }
-      : referral_user?.mega_center
+      : referral_user.mega_center
       ? {
           user_id: referral_user.mega_center.user_id,
           account_number: referral_user.mega_center
@@ -265,7 +265,7 @@ export async function addNewGenealogy(req, res, next) {
         is_mega_center: place_under_user.is_mega_center,
         is_owner: place_under_user.is_owner,
 
-        user_that_invite: place_under_user?.user_that_invite
+        user_that_invite: place_under_user.user_that_invite
           ? {
               user_id: place_under_user.user_that_invite.user_id,
               first_name: place_under_user.user_that_invite.first_name,
@@ -308,7 +308,7 @@ export async function addNewGenealogy(req, res, next) {
         is_mega_center: place_under_user.is_mega_center,
         is_owner: place_under_user.is_owner,
 
-        user_that_invite: place_under_user?.user_that_invite
+        user_that_invite: place_under_user.user_that_invite
           ? {
               user_id: place_under_user.user_that_invite.user_id,
               first_name: place_under_user.user_that_invite.first_name,
