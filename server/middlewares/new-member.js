@@ -17,6 +17,8 @@ import {
   PAIRING_BONUS_MAX_COUNT_PER_DAY,
   PAIRING_PRODUCT_VOUCHER_PAYMENT,
   INCOME_CHARGE,
+  COFFEE_PACKAGE_PER_PIN,
+  SOAP_PACKAGE_PER_PIN,
 } from "../constants.js";
 import IndirectReferral from "../models/indirect-referral.model.js";
 import PairingBonus from "../models/pairing-bonus.model.js";
@@ -37,6 +39,7 @@ export async function initializeNewMember(req, res, next) {
   });
 
   const user = await User.findById(req.user._id);
+  const user_verification = await UserVerification.findById(req.user._id);
 
   if (
     user &&
@@ -45,23 +48,40 @@ export async function initializeNewMember(req, res, next) {
     user.ending_pin >= 0 &&
     user.number_of_pin
   ) {
-    req.user = user;
-    req.referral_user = referral_user;
-    req.place_under_user = place_under_user;
-    next();
+    if (
+      user_verification.pin_stock_coffee >= COFFEE_PACKAGE_PER_PIN &&
+      user_verification.pin_stock_soap >= SOAP_PACKAGE_PER_PIN
+    ) {
+      req.user = user;
+      req.referral_user = referral_user;
+      req.place_under_user = place_under_user;
+      req.user_verification = user_verification;
+      next();
+    } else {
+      res.status(409).send({ message: "Out of Pin Stock" });
+    }
   } else {
     res.status(409).send({ message: "Invalid User!" });
   }
 }
 
-export async function increaseEndingPinDecreaseNumberOfPin(req, res, next) {
+export async function increaseEndingPinDecreaseNumberOfPinAndDecreaseStock(
+  req,
+  res,
+  next
+) {
   const user = req.user;
+  const user_verification = req.user_verification;
 
   if (user) {
     user.ending_pin = user.ending_pin + 1;
     user.number_of_pin = user.number_of_pin - 1;
 
-    await user.save();
+    user_verification.pin_stock_coffee -= COFFEE_PACKAGE_PER_PIN;
+    user_verification.pin_stock_soap -= SOAP_PACKAGE_PER_PIN;
+
+    req.user = await user.save();
+    req.user_verification = await user_verification.save();
 
     next();
   } else {
@@ -520,15 +540,13 @@ export async function checkTotalIncome(req, res, next) {
 
 export async function newMemberIncome(req, res, next) {
   const user = req.user;
+  const user_verification = req.user_verification;
 
   const total_income = req.total_income;
   const total_income_with_charge =
     req.total_income - req.total_income * INCOME_CHARGE;
 
   if (user.is_mega_center || user.is_stockist || user.is_admin) {
-    const user_verification = await UserVerification.findOne({
-      user_id: user._id,
-    });
     if (user_verification.new_member_income) {
       user_verification.new_member_income =
         user_verification.new_member_income + total_income_with_charge;
