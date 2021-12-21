@@ -39,12 +39,15 @@ export async function initializeNewMember(req, res, next) {
   });
 
   const user = await User.findById(req.user._id);
-  const user_verification = await UserVerification.findById(req.user._id);
+  const user_verification = await UserVerification.findOne({
+    user_id: req.user._id,
+  });
 
   if (
     user &&
     place_under_user &&
     referral_user &&
+    user_verification &&
     user.ending_pin >= 0 &&
     user.number_of_pin
   ) {
