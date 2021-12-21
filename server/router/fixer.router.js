@@ -16,6 +16,8 @@ import {
   InitializeUser,
 } from "../utils/fixer.js";
 import PairingBonus from "../models/pairing-bonus.model.js";
+import TotalIncome from "../models/total-income.model.js";
+import CoffeeIncome from "../models/coffee-income.model.js";
 
 const FixerRouter = express.Router();
 
@@ -151,5 +153,28 @@ FixerRouter.get(
     res.send({ message: "SUCCESSFULLY FIX Pairing!!" });
   })
 );
+
+
+FixerRouter.get(
+  "/income/coffee-income",
+  expressAsyncHandler(async (req, res) => {
+    const total_incomes = await TotalIncome.find({
+      type: 'Coffee Income'
+    });
+
+    if (total_incomes) {
+      for (let i = 0; i < total_incomes.length; i++) {
+        const coffee_income = await CoffeeIncome.findById(total_incomes[i]._id);
+
+        const total_income = await TotalIncome.findById(total_incomes[i]._id);
+
+        total_income.package = coffee_income.package;
+        await total_income.save();
+      }
+    }
+    res.send({ message: "SUCCESSFULLY FIX Pairing!!" });
+  })
+);
+
 
 export default FixerRouter;

@@ -9,6 +9,8 @@ const totalIncomeSchema = new mongoose.Schema(
     address: { type: String },
 
     type: { type: String, required: true },
+    package: {type: String},
+
     value: { type: Number, required: true, default: 0 },
   },
   { timestamps: true }
