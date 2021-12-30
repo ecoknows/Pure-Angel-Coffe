@@ -2,8 +2,12 @@
 @import 'variable'
 
 .new-order
-  .legend
+  .admin-legend, .title, .legend
     padding: 0 10px 5px 10px
+
+  .legend
+    display: flex
+    justify-content: space-between
 
   @include media('<=lg')
     padding-top: 65px

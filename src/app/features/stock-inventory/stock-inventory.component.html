@@ -6,72 +6,83 @@
       <div class="row">
         <h4 class="primary">PIN Coffee</h4>
         <h4 class="primary">
-          {{
-            (user$ | async)?.pin_stock_coffee == undefined
-              ? 0
-              : (user$ | async)?.pin_stock_coffee
-          }}
-          box
+          {{ (user$ | async)?.pin_stock_coffee || 0 }}
         </h4>
       </div>
 
       <div class="row">
         <h4 class="primary">PIN Soap</h4>
         <h4 class="primary">
-          {{
-            (user$ | async)?.pin_stock_soap == undefined
-              ? 0
-              : (user$ | async)?.pin_stock_soap
-          }}
-          box
+          {{ (user$ | async)?.pin_stock_soap || 0 }}
+        </h4>
+      </div>
+      <mat-divider></mat-divider>
+
+      <div class="row">
+        <h4 class="primary">Coffee</h4>
+        <h4 class="primary"></h4>
+      </div>
+
+      <div class="row">
+        <h4 class="primary">Set of B1T1</h4>
+        <h4 class="primary">
+          {{ b1t1SetConverter((user$ | async)?.stock_coffee_b1t1) || 0 }}
         </h4>
       </div>
 
       <div class="row">
-        <h4 class="primary">B1T1 Coffee</h4>
+        <h4 class="primary">Set of B2T3</h4>
         <h4 class="primary">
-          {{
-            (user$ | async)?.stock_coffee_b1t1 == undefined
-              ? 0
-              : (user$ | async)?.stock_coffee_b1t1
-          }}
-          box
+          {{ b2t3SetConverter((user$ | async)?.stock_coffee_b2t3) || 0 }}
         </h4>
       </div>
 
       <div class="row">
-        <h4 class="primary">B2T3 Coffee</h4>
+        <h4 class="primary">Total B1T1</h4>
         <h4 class="primary">
-          {{
-            (user$ | async)?.stock_coffee_b2t3 == undefined
-              ? 0
-              : (user$ | async)?.stock_coffee_b2t3
-          }}
-          box
+          {{ (user$ | async)?.stock_coffee_b1t1 || 0 }}
         </h4>
       </div>
 
       <div class="row">
-        <h4 class="primary">B1T1 Soap</h4>
+        <h4 class="primary">Total B2T3</h4>
         <h4 class="primary">
-          {{
-            (user$ | async)?.stock_soap_b1t1 == undefined
-              ? 0
-              : (user$ | async)?.stock_soap_b1t1
-          }}
-          box
+          {{ (user$ | async)?.stock_coffee_b2t3 || 0 }}
+        </h4>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row">
+        <h4 class="primary">Soap</h4>
+        <h4 class="primary"></h4>
+      </div>
+
+      <div class="row">
+        <h4 class="primary">Set of B1T1</h4>
+        <h4 class="primary">
+          {{ b1t1SetConverter((user$ | async)?.stock_soap_b1t1) || 0 }}
         </h4>
       </div>
 
       <div class="row">
-        <h4 class="primary">B2T3 Soap</h4>
+        <h4 class="primary">Set of B2T3</h4>
         <h4 class="primary">
-          {{
-            (user$ | async)?.stock_soap_b2t3 == undefined
-              ? 0
-              : (user$ | async)?.stock_soap_b2t3
-          }}
-          box
+          {{ b2t3SetConverter((user$ | async)?.stock_soap_b2t3) || 0 }}
+        </h4>
+      </div>
+
+      <div class="row">
+        <h4 class="primary">Total B1T1</h4>
+        <h4 class="primary">
+          {{ (user$ | async)?.stock_soap_b1t1 || 0 }}
+        </h4>
+      </div>
+
+      <div class="row">
+        <h4 class="primary">Total B2T3</h4>
+        <h4 class="primary">
+          {{ (user$ | async)?.stock_soap_b2t3 || 0 }}
         </h4>
       </div>
 
@@ -81,24 +92,14 @@
     <div class="row">
       <h4 class="primary">Total Coffee</h4>
       <h4 class="primary">
-        {{
-          (user$ | async)?.stock_coffee == undefined
-            ? 0
-            : (user$ | async)?.stock_coffee
-        }}
-        box
+        {{ (user$ | async)?.stock_coffee || 0 }}
       </h4>
     </div>
 
     <div class="row">
       <h4 class="primary">Total Soap</h4>
       <h4 class="primary">
-        {{
-          (user$ | async)?.stock_soap == undefined
-            ? 0
-            : (user$ | async)?.stock_soap
-        }}
-        box
+        {{ (user$ | async)?.stock_soap || 0 }}
       </h4>
     </div>
 

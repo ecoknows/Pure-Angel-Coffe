@@ -1,0 +1,34 @@
+<div mat-dialog-content>
+  <h3>Are you sure you want to approve this cashout ?</h3>
+  <ul>
+    <li>
+      <strong>Account #: </strong>
+      <span>{{ data.cashout.account_number }}</span>
+    </li>
+    <li>
+      <strong>Name: </strong>
+      <span>{{ data.cashout.first_name + " " + data.cashout.last_name }}</span>
+    </li>
+    <li>
+      <strong>Cashout Amount: </strong>
+      <span>₱ {{ data.cashout.amount | number: "1.2-2" }}</span>
+    </li>
+    <li>
+      <strong>Request Date: </strong>
+      <span>{{ data.cashout.createdAt | date: "short" }}</span>
+    </li>
+    <li>
+      <strong>Mode of Withdrawal: </strong>
+      <span>{{ modeOfWithdrawal(data.cashout.mode_of_withdrawal) }}</span>
+    </li>
+  </ul>
+  <mat-form-field appearance="fill" style="width: 100%">
+    <mat-label>Enter Remarks</mat-label>
+    <textarea matInput [(ngModel)]="remark"></textarea>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button [mat-dialog-close]="remark" cdkFocusInitial>Aprove</button>
+</div>

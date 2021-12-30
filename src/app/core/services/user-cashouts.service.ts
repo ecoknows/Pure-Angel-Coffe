@@ -53,12 +53,13 @@ export class UserCashoutsService {
       );
   }
 
-  approveCashout(cashout: CashoutsState) {
+  approveCashout(cashout: CashoutsState, remark: String) {
     this.http
       .post<{ message: string }>(
         environment.api + 'api/user-cashouts/approve-cashout',
         {
           cashout,
+          remark,
         },
         {
           headers: this.authService.headers,

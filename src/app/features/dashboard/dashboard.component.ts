@@ -90,4 +90,20 @@ export class DashboardComponent implements OnInit {
 
     return 'member';
   }
+
+  b1t1SetConverter(quantity: number | undefined) {
+    if (quantity) {
+      return quantity / 2;
+    }
+
+    return 0;
+  }
+
+  b2t3SetConverter(quantity: number | undefined) {
+    if (quantity) {
+      return quantity / 5;
+    }
+
+    return 0;
+  }
 }

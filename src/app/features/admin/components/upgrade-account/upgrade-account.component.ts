@@ -69,6 +69,8 @@ export class UpgradeAccountComponent implements OnInit {
         },
         stepper
       );
+
+      this.upgradeAccountService.searchMegaCenters();
     }
   }
 

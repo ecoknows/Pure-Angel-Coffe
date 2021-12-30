@@ -451,6 +451,16 @@
     </ng-container>
 
     <ng-container *ngIf="!(user$ | async)?.is_admin">
+      <mat-divider></mat-divider>
+
+      <div class="row" matRipple>
+        <div class="income">
+          <h4>Coffee</h4>
+        </div>
+
+        <div class="amount"></div>
+      </div>
+
       <div
         class="row"
         matRipple
@@ -458,7 +468,41 @@
         [queryParams]="{ income: 'product-voucher' }"
       >
         <div class="income">
-          <h5>B1T1 Coffee</h5>
+          <h5>Set of B1T1</h5>
+        </div>
+
+        <div class="amount">
+          <h5>
+            {{ b1t1SetConverter((user$ | async)?.stock_coffee_b1t1) || 0 }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        matRipple
+        routerLink="incomes"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>Set of B2T3</h5>
+        </div>
+
+        <div class="amount">
+          <h5>
+            {{ b2t3SetConverter((user$ | async)?.stock_coffee_b2t3) || 0 }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        matRipple
+        routerLink="incomes"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>Total B1T1</h5>
         </div>
 
         <div class="amount">
@@ -475,12 +519,39 @@
         [queryParams]="{ income: 'product-voucher' }"
       >
         <div class="income">
-          <h5>B2T3 Coffee</h5>
+          <h5>Total B2T3</h5>
         </div>
 
         <div class="amount">
           <h5>
             {{ (user$ | async)?.stock_coffee_b2t3 || 0 }}
+          </h5>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="row" matRipple>
+        <div class="income">
+          <h4>Soap</h4>
+        </div>
+
+        <div class="amount"></div>
+      </div>
+
+      <div
+        class="row"
+        matRipple
+        routerLink="incomes"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>Set of B1T1</h5>
+        </div>
+
+        <div class="amount">
+          <h5>
+            {{ b1t1SetConverter((user$ | async)?.stock_soap_b1t1) || 0 }}
           </h5>
         </div>
       </div>
@@ -492,7 +563,24 @@
         [queryParams]="{ income: 'product-voucher' }"
       >
         <div class="income">
-          <h5>B1T1 Soap</h5>
+          <h5>Set of B2T3</h5>
+        </div>
+
+        <div class="amount">
+          <h5>
+            {{ b2t3SetConverter((user$ | async)?.stock_soap_b2t3) || 0 }}
+          </h5>
+        </div>
+      </div>
+
+      <div
+        class="row"
+        matRipple
+        routerLink="incomes"
+        [queryParams]="{ income: 'product-voucher' }"
+      >
+        <div class="income">
+          <h5>Total B1T1</h5>
         </div>
 
         <div class="amount">
@@ -509,7 +597,7 @@
         [queryParams]="{ income: 'product-voucher' }"
       >
         <div class="income">
-          <h5>B2T3 Soap</h5>
+          <h5>Total B2T3</h5>
         </div>
 
         <div class="amount">

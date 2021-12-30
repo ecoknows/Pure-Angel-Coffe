@@ -16,17 +16,26 @@
     <ngx-datatable-column name="Details">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <mat-checkbox
+          #checkbox
           class="example-margin"
           [checked]="row.is_claimed"
-          (change)="approvedCashout(row)"
+          (change)="approvedCashout(row, checkbox)"
         >
           <span class="primary">{{ row.account_number }}</span>
         </mat-checkbox>
 
         <div>{{ row.first_name }} {{ row.last_name }}</div>
         <div>
+          <span class="primary"> Request Date:</span>
           <strong>
             {{ row.createdAt | date: "short" }}
+          </strong>
+        </div>
+
+        <div *ngIf="row.date_claimed">
+          <span class="primary"> Claimed Date:</span>
+          <strong>
+            {{ row.date_claimed | date: "short" }}
           </strong>
         </div>
       </ng-template>
@@ -35,8 +44,28 @@
     <ngx-datatable-column name="Amount">
       <ng-template let-row="row" ngx-datatable-cell-template>
         <div class="primary">₱ {{ row.amount | number: "1.2-2" }}</div>
+        <div
+          class="link"
+          matRipple
+          routerLink="/dashboard/incomes"
+          [queryParams]="{
+            income: 'search-total-income',
+            user_id: row.user_id,
+            name: row.first_name + ' ' + row.last_name,
+            account_number: row.account_number
+          }"
+        >
+          View History
+        </div>
         <div>
           <strong>VIA {{ modeOfWithdrawal(row.mode_of_withdrawal) }} </strong>
+        </div>
+
+        <div *ngIf="row.remark">
+          <span class="primary"> Remark :</span>
+          <strong>
+            {{ row.remark }}
+          </strong>
         </div>
       </ng-template>
     </ngx-datatable-column>

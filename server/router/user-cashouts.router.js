@@ -5,6 +5,7 @@ import Cashout from "../models/cashout.model.js";
 import UserVerification from "../models/user.verification.model.js";
 import { verifyUserToken, checkIfAdmin } from "../utils.js";
 import Admin from "../models/admin.model.js";
+import moment from "moment";
 
 const UserCashouts = express.Router();
 
@@ -18,7 +19,7 @@ UserCashouts.get(
 
     if (cashouts) {
       res.send({
-        message: "Succesffully Fetch cashouts",
+        message: "Succesfully Fetch cashouts",
         data: cashouts,
       });
     } else {
@@ -35,11 +36,14 @@ UserCashouts.post(
   checkIfAdmin,
   expressAsyncHandler(async (req, res) => {
     const old_cashout = req.body.cashout;
+    const remark = req.body.remark;
 
     const cashout = await Cashout.findById(old_cashout._id);
 
     if (cashout) {
       cashout.is_claimed = !old_cashout.is_claimed;
+      cashout.remark = remark;
+      cashout.date_claimed = moment();
 
       const updated_cashout = await cashout.save();
       if (updated_cashout.is_claimed) {

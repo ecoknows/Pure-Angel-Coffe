@@ -12,16 +12,16 @@ StockInventoryRouter.post(
   expressAsyncHandler(async (req, res) => {
     let user = await UserVerification.findOne({ user_id: req.user._id });
 
+    const restock_coffee = req.body.restock_coffee;
+    const restock_soap = req.body.restock_soap;
+
     if (user) {
-      if (
-        req.body.restock_coffee != undefined &&
-        req.body.restock_coffee >= 0
-      ) {
-        user.stock_coffee = req.body.restock_coffee;
+      if (restock_coffee != undefined && restock_coffee >= 0) {
+        user.stock_coffee = user.stock_coffee + restock_coffee;
       }
 
-      if (req.body.restock_soap != undefined && req.body.restock_soap >= 0) {
-        user.stock_soap = req.body.restock_soap;
+      if (restock_soap != undefined && restock_soap >= 0) {
+        user.stock_soap = user.stock_soap + restock_soap;
       }
 
       await user.save();

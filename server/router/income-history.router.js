@@ -336,4 +336,28 @@ IncomeHistoryRouter.get(
     }
   })
 );
+
+IncomeHistoryRouter.post(
+  "/search-total-income",
+  verifyUserToken,
+  expressAsyncHandler(async (req, res) => {
+    const user_id = req.body.user_id;
+
+    const totalIncome = await TotalIncome.find({
+      user_id: user_id,
+    }).sort({ createdAt: -1 });
+
+    if (totalIncome) {
+      res.send({
+        message: "Successfully Fetch Data",
+        data: totalIncome,
+      });
+    } else {
+      res.send({
+        message: "Empty Income",
+      });
+    }
+  })
+);
+
 export default IncomeHistoryRouter;

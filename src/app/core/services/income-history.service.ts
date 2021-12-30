@@ -268,4 +268,22 @@ export class IncomeHistoryService {
         (error) => {}
       );
   }
+
+  fetchSearchTotalIncome(user_id: string | null) {
+    this.http
+      .post<{ message: string; data: IncomeHistoryState[] }>(
+        environment.api + 'api/income-history/search-total-income',
+        { user_id: user_id },
+        { headers: this.authService.headers }
+      )
+      .subscribe(
+        (response) => {
+          const data = response.data;
+          if (data) {
+            this.store.dispatch(setListIncomeHistory({ list: data }));
+          }
+        },
+        (error) => {}
+      );
+  }
 }

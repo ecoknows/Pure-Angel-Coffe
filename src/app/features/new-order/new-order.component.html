@@ -1,24 +1,77 @@
 <div class="new-order">
-  <div class="legend">
-    <strong>AVAILABLE COFFEE :</strong>
-    <span *ngIf="!(user$ | async)?.is_admin">
-      {{ (user$ | async)?.stock_coffee_b1t1 || 0 }} B1T1,
-      {{ (user$ | async)?.stock_coffee_b2t3 || 0 }} B2T3
-    </span>
-    <span *ngIf="(user$ | async)?.is_admin">
-      {{ (user$ | async)?.stock_coffee || 0 }} BOXES
-    </span>
+  <div class="admin-legend" *ngIf="(user$ | async)?.is_admin">
+    <strong>COFFEE:</strong>
+    <span> {{ (user$ | async)?.stock_coffee || 0 }} BOXES </span>
   </div>
 
-  <div class="legend">
-    <strong>AVAILABLE SOAP :</strong>
-    <span *ngIf="!(user$ | async)?.is_admin">
-      {{ (user$ | async)?.stock_soap_b1t1 || 0 }} B1T1,
-      {{ (user$ | async)?.stock_soap_b2t3 || 0 }} B2T3
-    </span>
-    <span *ngIf="(user$ | async)?.is_admin">
-      {{ (user$ | async)?.stock_soap || 0 }} BOXES
-    </span>
+  <div class="admin-legend" *ngIf="(user$ | async)?.is_admin">
+    <strong>SOAP:</strong>
+    <span> {{ (user$ | async)?.stock_soap || 0 }} BOXES </span>
+  </div>
+
+  <div class="title" *ngIf="!(user$ | async)?.is_admin">
+    <strong>COFFEE</strong>
+  </div>
+
+  <div class="legend" *ngIf="!(user$ | async)?.is_admin">
+    <div>
+      <strong>B1T1 :</strong>
+      <span>
+        {{ b1t1SetConverter((user$ | async)?.stock_coffee_b1t1) || 0 }} Set
+      </span>
+    </div>
+
+    <div>
+      <strong>Total :</strong>
+      <span> {{ (user$ | async)?.stock_coffee_b1t1 || 0 }} Coffee </span>
+    </div>
+  </div>
+
+  <div class="legend" *ngIf="!(user$ | async)?.is_admin">
+    <div>
+      <strong>B2T3 :</strong>
+      <span>
+        {{ b2t3SetConverter((user$ | async)?.stock_coffee_b2t3) || 0 }} Set
+      </span>
+    </div>
+
+    <div>
+      <strong>Total :</strong>
+      <span> {{ (user$ | async)?.stock_coffee_b2t3 || 0 }} Coffee </span>
+    </div>
+  </div>
+
+  <div class="title" *ngIf="!(user$ | async)?.is_admin">
+    <mat-divider></mat-divider>
+    <strong>SOAP</strong>
+  </div>
+
+  <div class="legend" *ngIf="!(user$ | async)?.is_admin">
+    <div>
+      <strong>B1T1 :</strong>
+      <span>
+        {{ b1t1SetConverter((user$ | async)?.stock_soap_b1t1) || 0 }} Set
+      </span>
+    </div>
+
+    <div>
+      <strong>Total :</strong>
+      <span> {{ (user$ | async)?.stock_soap_b1t1 || 0 }} Soap </span>
+    </div>
+  </div>
+
+  <div class="legend" *ngIf="!(user$ | async)?.is_admin">
+    <div>
+      <strong>B2T3 :</strong>
+      <span>
+        {{ b2t3SetConverter((user$ | async)?.stock_soap_b2t3) || 0 }} Set
+      </span>
+    </div>
+
+    <div>
+      <strong>Total :</strong>
+      <span> {{ (user$ | async)?.stock_soap_b2t3 || 0 }} Soap </span>
+    </div>
   </div>
 
   <mat-stepper
@@ -140,14 +193,6 @@
         <app-referral-info
           [secondFormGroup]="this.secondFormGroup"
         ></app-referral-info>
-
-        <mat-divider style="margin-bottom: 10px"></mat-divider>
-      </ng-container>
-
-      <ng-container *ngIf="(user$ | async)?.is_stockist">
-        <app-mega-center-info
-          [secondFormGroup]="this.secondFormGroup"
-        ></app-mega-center-info>
 
         <mat-divider style="margin-bottom: 10px"></mat-divider>
       </ng-container>

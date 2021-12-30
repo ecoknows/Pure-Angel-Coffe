@@ -24,8 +24,8 @@ export class StockInventoryComponent implements OnInit {
   ) {
     this.user$ = this.store.select('userReducer');
     this.form = this.fb.group({
-      restock_coffee: [undefined],
-      restock_soap: [undefined],
+      restock_coffee: [0],
+      restock_soap: [0],
     });
   }
 
@@ -40,5 +40,21 @@ export class StockInventoryComponent implements OnInit {
       restock_coffee,
       restock_soap,
     });
+  }
+
+  b1t1SetConverter(quantity: number | undefined) {
+    if (quantity) {
+      return quantity / 2;
+    }
+
+    return 0;
+  }
+
+  b2t3SetConverter(quantity: number | undefined) {
+    if (quantity) {
+      return quantity / 5;
+    }
+
+    return 0;
   }
 }

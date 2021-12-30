@@ -40,6 +40,9 @@
       <ng-container *ngIf="title == 'total-income'"
         >Total Income History</ng-container
       >
+      <ng-container *ngIf="title == 'search-total-income'"
+        >Total Income History</ng-container
+      >
       <ng-container *ngIf="title == 'unclaimed-income'"
         >Unclaimed Income History</ng-container
       >
@@ -48,6 +51,10 @@
       >
     </h1>
     <p class="note">Reminder: there is a 10% charge in every income</p>
+    <p class="note" *ngIf="title == 'search-total-income'">
+      Income History for
+      <span class="primary">{{ account_number }}, {{ name }} </span>
+    </p>
 
     <ng-container *ngIf="title == 'unclaimed-income'">
       <ul>
@@ -166,7 +173,11 @@
     </ng-container>
 
     <ng-container
-      *ngIf="title == 'total-income' || title == 'unclaimed-income'"
+      *ngIf="
+        title == 'total-income' ||
+        title == 'unclaimed-income' ||
+        title == 'search-total-income'
+      "
     >
       <ngx-datatable-column name="Income Name">
         <ng-template let-row="row" ngx-datatable-cell-template>

@@ -14,6 +14,8 @@ const cashoutSchema = new mongoose.Schema(
     withdrawal_charge: { type: Number },
     is_claimed: { type: Boolean, default: false },
     mode_of_withdrawal: { type: String },
+    date_claimed: { type: Date },
+    remark: { type: String },
   },
   {
     timestamps: true,

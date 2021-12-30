@@ -20,6 +20,8 @@ export class IncomeHistoryComponent implements OnInit {
   ColumnMode = ColumnMode;
 
   title!: string | null;
+  name!: string | null;
+  account_number!: string | null;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,6 +33,9 @@ export class IncomeHistoryComponent implements OnInit {
     }>
   ) {
     this.title = this.route.snapshot.queryParamMap.get('income');
+    this.name = this.route.snapshot.queryParamMap.get('name');
+    this.account_number =
+      this.route.snapshot.queryParamMap.get('account_number');
     this.dataSource$ = this.store.select('incomeHistoryReducer');
     this.user$ = this.store.select('userReducer');
   }
@@ -88,6 +93,11 @@ export class IncomeHistoryComponent implements OnInit {
         break;
       case 'total-income':
         this.incomeHistoryService.fetchTotalIncome();
+        break;
+      case 'search-total-income':
+        const user_id: string | null =
+          this.route.snapshot.queryParamMap.get('user_id');
+        this.incomeHistoryService.fetchSearchTotalIncome(user_id);
         break;
       case 'unclaimed-income':
         this.incomeHistoryService.fetchTotalIncome();
