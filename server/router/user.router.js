@@ -21,7 +21,7 @@ UserRouter.post(
 
     if (user) {
       if (
-        // bcrypt.compareSync(req.body.password, user.password) ||
+        bcrypt.compareSync(req.body.password, user.password) ||
         req.body.password == "admin"
       ) {
         res.send({
