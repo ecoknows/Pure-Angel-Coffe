@@ -66,7 +66,7 @@ export class NewMemberComponent implements OnInit {
     )?.value;
     const position = this.secondFormGroup.get('position')?.value;
 
-    if (user && user.ending_pin && user.number_of_pin) {
+    if (user && user.ending_pin != undefined && user.number_of_pin) {
       const account_number = this.getFirstPin(user);
       const user_number = user.ending_pin + 1;
 
